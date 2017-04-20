@@ -1,4 +1,4 @@
 ## declare
 
-declare芯片平台
+declare 项目申报
 

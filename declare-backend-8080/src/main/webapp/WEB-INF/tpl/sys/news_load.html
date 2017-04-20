@@ -1,0 +1,73 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	<tr>
+		<th>
+			<label>标题：</label>
+		</th>
+		<td>
+			${news.title}
+		</td>
+		<th>
+			<label>状态：</label>
+		</th>
+		<td>
+			${news.status.displayName}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>图片：</label>
+		</th>
+		<td>
+			<@e.imgUrl url=news.pic rule="r60c70"/>
+		</td>
+		<th>
+			<label>排序值：</label>
+		</th>
+		<td>
+			${news.sort}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>发布时间：</label>
+		</th>
+		<td>
+			${news.publishTime?datetime}
+		</td>
+		<th>
+			<label>浏览数：</label>
+		</th>
+		<td>
+			${news.browseNum}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>概要：</label>
+		</th>
+		<td colspan="3">
+			${news.summary}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>内容：</label>
+		</th>
+		<td colspan="3">
+			${news.content}
+		</td>
+	</tr>
+		
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dspsemi.declare.core.dao.bbs.BbsTopicMapper">
+
+	<select id="pageTopic" resultType="com.dspsemi.declare.core.pojo.bbs.BbsTopic"
+		parameterType="map">
+		SELECT
+		bt.id,
+		bt.title,
+		btc.`name` as bbsSection,
+		bt.replyNum,
+		bt.collectNum,
+		bt.visitNum,
+		bt.sort,
+		bt.createTime,
+		bt.`status`
+		FROM
+		bbs_topic bt
+		LEFT JOIN bbs_topic_ctg btc ON bt.ctgId = btc.id
+		WHERE bt.`status` != 9
+		<if test="status!=null">
+			AND bt.`status` = #{status}
+		</if>
+		<if test="title!=null and title!=''">
+			AND bt.title like #{title}
+		</if>
+		<if test="creator!=null and creator!=''">
+			AND bt.creator like #{creator}
+		</if>
+		ORDER BY
+		bt.createTime DESC
+		limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="pageTopicBySectionId" resultType="com.dspsemi.declare.core.pojo.bbs.BbsTopic"
+		parameterType="map">
+		SELECT
+		bt.id,
+		bt.title,
+		btc.`name` as bbsSection,
+		bt.replyNum,
+		bt.collectNum,
+		bt.visitNum,
+		bt.sort,
+		bt.createTime,
+		bt.`status`,		
+		bt.content,
+		bt.creator,
+		bt.creatorId,
+		bt.ctgId,
+		bt.isElite,
+		bt.isHot,
+		bt.isReply,
+		bt.isStick,
+		bt.sectionId	
+		FROM
+		bbs_topic bt
+		LEFT JOIN bbs_topic_ctg btc ON bt.ctgId = btc.id 
+		WHERE  bt.`status`!= 9 AND bt.sectionId = #{sectionId}
+	    ORDER BY bt.isStick DESC, bt.createTime DESC
+		limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="pageTopicCount" resultType="int" parameterType="map">
+		SELECT
+		count(1) as count
+		FROM
+		bbs_topic bt
+		WHERE bt.`status` != 9
+		<if test="status!=null">
+			 AND bt.`status` = #{status}
+		</if>
+	</select>
+	
+	<select id="pageTopicCountBySectionId" resultType="int" parameterType="map">
+		SELECT
+		count(1) as count
+		FROM
+		bbs_topic bt
+		WHERE bt.`status` != 9 AND bt.sectionId = #{sectionId}
+		<if test="status!=null">
+			 AND bt.`status` = #{status}
+		</if>
+	</select>
+	<!-- 根据关键字、查询帖子列表  @auther:yjy -->
+	<select id="pageSearchTopByKeyword" resultType="com.dspsemi.declare.core.bo.SerarchTopResultList" parameterType="map">
+		SELECT
+		bt.id,
+		bt.title,
+		bt.replyNum,
+		bt.collectNum,
+		bt.visitNum,
+		bt.createTime,
+		bt.creator
+		FROM
+		bbs_topic bt
+		WHERE  bt.`status`!= 9 
+		AND bt.title like '%${keyword}%'
+	    ORDER BY bt.isStick DESC, bt.createTime DESC
+		limit #{startRow},#{pageSize}
+	</select>
+	
+	<!-- 根据关键字、查询帖子列表 @auther:yjy-->
+	<select id="pageSearchTopByKeywordCount" resultType="int" parameterType="map">
+		SELECT
+		count(1) as count
+		FROM
+		bbs_topic bt
+		WHERE  bt.`status`!= 9 
+		AND bt.title like '%${keyword}%'
+	</select>
+	
+	<select id="getIndexTopicNew" resultType="com.dspsemi.declare.core.bo.NewsBo">
+		select  id,title as content,createTime as createDate from bbs_topic where `status` != 9 order by createTime desc limit 0,12
+	</select>
+	
+	<select id="getIndexTopicByHot" resultType="com.dspsemi.declare.core.bo.NewsBo">
+		select  id,title  as content,createTime as createDate  from bbs_topic where `status` != 9 order by visitNum desc limit 0,12
+	</select>
+</mapper>
+

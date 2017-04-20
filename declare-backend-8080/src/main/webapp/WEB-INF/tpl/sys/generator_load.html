@@ -1,0 +1,86 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	<tr>
+		<th>
+			<label>初始值：</label>
+		</th>
+		<td>
+			${generator.initialVal}
+		</td>
+		<th>
+			<label>当前值：</label>
+		</th>
+		<td>
+			${generator.currentVal}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>最大值：</label>
+		</th>
+		<td>
+			${generator.maxVal}
+		</td>
+		<th>
+			<label>批次容量：</label>
+		</th>
+		<td>
+			${generator.fetchSize}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>增长值：</label>
+		</th>
+		<td>
+			${generator.increment}
+		</td>
+		<th>
+			<label>是否循环：</label>
+		</th>
+		<td>
+			${generator.isCycle.displayName}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>创建人：</label>
+		</th>
+		<td>
+			${generator.creator}
+		</td>
+		<th>
+			<label>创建时间：</label>
+		</th>
+		<td>
+			${generator.createTime?datetime}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>修改人：</label>
+		</th>
+		<td>
+			${generator.modifier}
+		</td>
+		<th>
+			<label>修改时间：</label>
+		</th>
+		<td>
+			${generator.modifyTime?datetime}
+		</td>
+	</tr>
+		
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

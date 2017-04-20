@@ -1,0 +1,35 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<#-- 修改区域 -->
+<form class="form-validate" action="/topicCtg/updating.html" method="post"
+		suc="更新成功" fail="更新失败">
+		
+	<#-- 影藏属性 -->
+	<input type="hidden" name="id" value="${topicCtg.id}"/>
+	
+	<table class="table-edit">
+		
+		<tr>
+			<th>
+				<label>标题：</label>
+			</th>
+			<td>
+				<input type="text" maxlength="20" name="name" value="${topicCtg.name}" validator="maxlength[20]"/>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<label class="required">排序值：</label>
+			</th>
+			<td>
+				<input type="text" name="sort" validator="required,int_no_minus" value="${topicCtg.sort}"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

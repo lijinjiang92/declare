@@ -1,0 +1,74 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	<tr>
+		<th>
+			<label>类型名：</label>
+		</th>
+		<td>
+			${usualIssueType.name}
+		</td>
+		<th>
+			<label>排序值：</label>
+		</th>
+		<td>
+			${usualIssueType.sort}
+		</td>
+	</tr>
+	
+	<tr>
+		
+		<th>
+			<label>创建人ID：</label>
+		</th>
+		<td>
+			${usualIssueType.creatorId}
+		</td>
+		<th>
+			<label>创建人：</label>
+		</th>
+		<td>
+			${usualIssueType.creator}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>创建时间：</label>
+		</th>
+		<td>
+			${usualIssueType.createTime?datetime}
+		</td>
+		<th>
+			<label>修改人ID：</label>
+		</th>
+		<td>
+			${usualIssueType.modifierId}
+		</td>
+	</tr>
+	
+	<tr>
+		
+		<th>
+			<label>修改人：</label>
+		</th>
+		<td>
+			${usualIssueType.modifier}
+		</td>
+		<th>
+			<label>修改时间：</label>
+		</th>
+		<td>
+			${usualIssueType.modifyTime?datetime}
+		</td>
+	</tr>
+	
+		
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

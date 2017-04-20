@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dspsemi.declare.core.dao.bbs.BbsSectionCtgMapper">
+
+	<resultMap type="com.dspsemi.declare.core.bo.SectionClassifyBo" id="sectionClassifyBoSultMap">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<collection property="sectionBoList" ofType="com.dspsemi.declare.core.bo.SectionBo">
+			<id column="section_id" property="id" />
+			<result column="section_name" property="name" />
+		</collection>
+	</resultMap>
+	
+	<!-- 获取版块分类及其分类下面的版块 -->
+	<select id="selectSectionClassifyBo"
+		resultMap="sectionClassifyBoSultMap">
+		select bbs_section_ctg.id,
+				bbs_section_ctg.name,
+				bbs_section.id as section_id,
+				bbs_section.name as section_name,
+				bbs_section.describes as describes
+	 	from bbs_section_ctg join bbs_section on bbs_section_ctg.id= bbs_section.ctgId
+	 	where bbs_section.status=0 and bbs_section_ctg.status=0
+	</select>
+
+</mapper>
+

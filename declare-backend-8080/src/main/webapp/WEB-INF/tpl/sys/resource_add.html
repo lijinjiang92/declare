@@ -1,0 +1,113 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<script>
+$(function(){
+	$.ajax({
+		url : '/resourceType/resourceType_list.do',
+		type : 'post',
+		suc : function(data) {
+			for(i=0;i<data.data.length;i++){
+				$("#resourceType").append("<option value='"+data.data[i].id+"'>"+data.data[i].name+"</option>");
+			}
+		}
+	});
+	
+	$('#fileupload').fileupload({
+    	url: BaseData.resUrl + "/upload",
+    	formData: {
+    		"MIX_TYPE" : "ic-resource"
+    	},
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('.progress-bar').css('width', progress + '%');
+        }
+    }).on("fileuploadchange", function (e, data) {
+    	$('.progress-bar').css('width', '0');
+    	$("#addUrl").val("");
+    }).on("fileuploaddone", function (e, data) {
+    	data = data.result;
+    	if (data && data.code == '0') {
+    		var files = data.data;
+    		files.forEach(function(item, index) {
+    			if (item.error) {
+    				$.alert("error", item.error);
+    			} else {
+    				var url = (item.path + "/" + item.name).replace(new RegExp(BaseData.tmpPath + "/"), ""),
+						$input = $("#addUrl");
+					$input.val(url);
+					BaseData.validateObj.validate(false, $input);
+    			}
+    		});
+    	} else {
+    		$.alert("error", data.msg ? data.msg : "上传文件失败！");
+    	}
+    }).on("fileuploadfail", function (e, data) {
+    	$.alert("error", "上传文件失败！");
+    });
+	$("#uploadImgs").uploadImg({
+		picType : "ic-case",
+		picInput : "pic",
+		imgRule : "r150c150",
+		picDiv : "uploadImgs",
+		uploadTitle : "up_img"
+	});
+})
+</script>
+<form class="form-validate" action="/resource/adding.html" method="post"
+	suc="新增资源成功" fail="新增资源失败">
+
+	<table class="table-edit">
+		<tr>
+			<th><label class="required">标题：</label></th>
+			<td><input type="text" name="title"
+				validator="maxlength[512],required" maxlength="512" /></td>
+		</tr>
+
+		<tr>
+			<th><label class="required">资源类型：</label></th>
+			<td><select id="resourceType" name="resourceTypeId" class="sele" validator="min[1],required" validator-msg="请选择">
+					<option value="0">请选择</option>
+			</select></td>
+		</tr>
+
+		<tr>
+			<th><label class="required">排序值：</label></th>
+			<td><input type="text" name="sort"
+				validator="num,max[999999999],required" maxlength="9" /></td>
+		</tr>
+
+		<tr>
+			<th><label class="required">资源：</label></th>
+			<td>
+				<input type="text" id="addUrl" name="url" validator="maxlength[512],required" style="width: 90px;" readonly />
+				<span class="fileinput-button">
+                    <span>上传</span>
+                    <input type="file" id="fileupload" value="上传" />
+                </span>
+				<div class="progress progress-striped active">
+					<div style="width: 0;" class="progress-bar progress-bar-warning"></div>
+				</div>
+
+			</td>
+		</tr>
+		<tr>
+			<th><label>图片：</label></th>
+			<td><input type="hidden" id="pic" name="pic" />
+				<div id="uploadImgs" class="uploadPicDiv">
+					<div id="up_img" class="uploadTitle"></div>
+				</div></td>
+		</tr>
+		<tr>
+			<th><label>描述：</label></th>
+			<td><input type="text" name="description"
+				validator="maxlength[65535]" maxlength="65535" /></td>
+		</tr>
+
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+
+</form>

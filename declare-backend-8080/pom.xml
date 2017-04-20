@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.dspsemi.declare</groupId>
+		<artifactId>declare-parent</artifactId>
+		<version>0.0.2</version>
+	</parent>
+	
+	<artifactId>declare-backend-8080</artifactId>
+	<packaging>war</packaging>
+	<name>declare-backend Maven Webapp</name>
+	
+	<dependencies>
+		<!-- 项目jar包 -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>declare-core</artifactId>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.dspsemi.global</groupId> -->
+<!-- 			<artifactId>global-login</artifactId> -->
+<!-- 		</dependency> -->
+		<!-- 第三方jar包 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>declare-backend</finalName>
+		<sourceDirectory>src/main/java/</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<!-- <outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/classes/</outputDirectory> -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<warName>declare-backend</warName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+

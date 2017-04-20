@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.dspsemi.declare.core.dao.location.DistrictMapper">
+	<select id="queryByCityName" resultType="com.dspsemi.declare.core.pojo.location.District" parameterType="map">
+		 SELECT d.id,d.name FROM l_district d 
+		 INNER JOIN l_city c ON d.cityId=c.`id`
+		 WHERE  c.`name`=#{cityName}
+	</select>
+	
+	
+</mapper>
+

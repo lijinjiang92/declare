@@ -1,0 +1,69 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<@e.script src="/js/??sys/generator_update.js" />
+<#-- 修改区域 -->
+<form class="form-validate" action="/generator/updating.html" method="post"
+		suc="更新主键生成器成功" fail="更新主键生成器失败">
+		
+	<#-- 影藏属性 -->
+	<input type="hidden" name="generatorType" value="${generator.generatorType.className}"/>
+	
+	<table class="table-edit">
+		
+		<tr>
+			<th>
+				<label class="required">初始值：</label>
+			</th>
+			<td>
+				<input type="text" name="initialVal" value="${generator.initialVal}" validator="alphanum,maxlength[32],required,fun.initialVal" maxlength="32" />
+			</td>
+			<th>
+				<label class="required">当前值：</label>
+			</th>
+			<td>
+				<input type="hidden" id="oldCurVal" value="${generator.currentVal}" />
+				<input type="text" name="currentVal" value="${generator.currentVal}" validator="alphanum,maxlength[32],required,fun.curVal" maxlength="32" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label>最大值：</label>
+			</th>
+			<td>
+				<input type="text" name="maxVal" value="${generator.maxVal}" validator="alphanum,maxlength[32],fun.maxVal" maxlength="32" />
+			</td>
+			<th>
+				<label class="required">批次容量：</label>
+			</th>
+			<td>
+				<input type="text" name="fetchSize" value="${generator.fetchSize}" validator="num,max[999999999],required" maxlength="9" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">增长值：</label>
+			</th>
+			<td>
+				<input type="text" name="increment" value="${generator.increment}" validator="num,max[999999999],required" maxlength="9" />
+			</td>
+			<th>
+				<label class="required">是否循环：</label>
+			</th>
+			<td>
+				<@e.radioEnum name="isCycle" enumName="YesNo" selectedValue=generator.isCycle
+						tagAttr="validator='minlength[1],required' validator-msg='请选择是否循环'"
+						tagAttrIndex="last" />
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

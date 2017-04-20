@@ -1,0 +1,86 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	<tr>
+		<th>
+			<label>开发板基础表ID：</label>
+		</th>
+		<td>
+			${devBoardReport.boardBaseId}
+		</td>
+		<th>
+			<label>开发板产品表ID：</label>
+		</th>
+		<td>
+			${devBoardReport.boardProId}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>标题：</label>
+		</th>
+		<td>
+			${devBoardReport.title}
+		</td>
+	
+		<th>
+			<label>排序值：</label>
+		</th>
+		<td>
+			${devBoardReport.sort}
+		</td>
+	</tr>
+	
+	<tr>
+		
+		<th>
+			<label>浏览数：</label>
+		</th>
+		<td>
+			${devBoardReport.browseNum}
+		</td>
+		<th>
+			<label>状态：</label>
+		</th>
+		<td>
+			${devBoardReport.status.displayName}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>内容：</label>
+		</th>
+		<td colspan="3">
+			${devBoardReport.content}
+		</td>
+		
+	</tr>
+	
+	<tr>
+		<th>
+			<label>附件URL：</label>
+		</th>
+		<td colspan="3">
+			${devBoardReport.attachment}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>备注：</label>
+		</th>
+		<td colspan="3">
+			${devBoardReport.remark}
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

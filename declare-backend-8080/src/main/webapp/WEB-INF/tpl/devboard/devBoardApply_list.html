@@ -1,0 +1,147 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<!DOCTYPE HTML>
+<html>
+<head>
+<#include "/WEB-INF/common/meta.html"/>
+<title>开发板申请表</title>
+<#include "/WEB-INF/common/styles.html"/>
+</head>
+<body>
+
+	<#-- 头部区域  -->
+	<#include "/WEB-INF/common/header.html"/>
+	
+	<div id="main">
+		
+		<#-- 左侧菜单区域  -->
+		<#include "/WEB-INF/common/left.html"/>
+		
+		<div id="conent">
+			
+			<#-- 页面标题  -->
+			<h2>开发板申请表</h2>
+			
+			<div id="core-div">
+				
+				<#-- 查询区域 -->
+				<div class="control">
+					<form action="/devBoardApply/list.html" method="post">
+						<ul class="search">
+							
+							<li class="param-li">
+								开发板名称：<input type="text" name="name" value="${devBoardApply.name}" />
+							</li>
+	                          <li class="param-li">
+								类&nbsp;&nbsp;&nbsp;&nbsp;别：
+								<@e.selectEnum enumName="DevBoardApplyStatus" id="applyStatus" name="applyStatus" 
+									  	selectedValue="%{devBoardApply.applyStatus}" 
+								  	headerKey="" headerValue="--请选择--" />
+	                        </li>
+							<#-- 查询按钮 -->
+							<li class="search-btns">
+	                        	<button type="submit" class="common-submit btn blue-btn">查询</button>
+	                        	<button type="reset" class="clear-data btn blue-btn">清空</button>
+							</li>
+	                        
+							<#-- 功能按钮区域 -->
+							<li class="handle-btns">
+								<!-- <@permited value="devBoardApply/add">
+	                        		<button type="button" class="btn" dialog="/devBoardApply/add.html">+ 新增</button>
+	                        	</@permited> -->
+	                        	<@permited value="devBoardApply/remove">
+	                        		<button type="button" class="btn" onclick="batchRemove('devBoardApply/remove.html')">删除</button>
+	                        	</@permited>
+	                        	<!-- <@permited value="devBoardApply/openClose">
+		                        	<button type="button" class="handler open batch btn">启用</button>
+									<button type="button" class="handler close batch btn">禁用</button>
+								</@permited> -->
+							</li>
+						</ul>
+					</form>	
+				</div>
+				
+				<#-- 列表信息区域 -->
+				<div class="data-div">
+					<table class="ui-table">
+						<tr class="th-row">
+							<th width="30" checkbox="true"></th>
+							<th width="40" row-no="true">序号</th>
+							<th width="100">开发板名称</th>
+							<th width="100">供应商名称</th>
+							<th width="100">申请状态</th>
+							<th width="100">申请单价</th>
+							<th width="100">申请数</th>
+							<th width="100">申请总价</th>
+							<th width="100">申请理由</th>
+							<th width="100">申请人</th>
+							<th width="130" fixed="true" no-tip="true">操作</th>
+						</tr>
+						
+						<#list dataPage.data as obj>
+							<#-- trid 方便快速选择某行 -->
+							<tr trid="${obj.id}">
+								<td><input type="checkbox" name="ids" value="${obj.id}" /></td>
+								<td>${obj_index + 1}</td>
+								<td>${obj.name}</td>
+								<td>${obj.manufacturer}</td>
+								<td>${obj.applyStatus.displayName}</td>
+								<td>${obj.applyPrice}</td>
+								<td>${obj.applyNum}</td>
+								<td>${obj.applyTotalPrice}</td>
+								<td>${obj.applyReason}</td>
+								<td>${obj.creator}</td>
+								<td>
+									<@permited value="devBoardApply/load">
+										<a class="icon-btn icon-detail" dialog="/devBoardApply/load.html?id=${obj.id}" title="详情" href="javascript:void(0);" > </a>
+									</@permited>
+									<#if obj.applyStatus.className != "SUC">
+									<@permited value="devBoardApply/verify">
+										<a class="icon-btn icon-approval"  title="审核" href="javascript:Verify('${obj.id}')" > </a>
+									</@permited>
+									</#if>
+									<@permited value="activity/update">									
+									<a class="icon-btn icon-edit" dialog="/devBoardApply/update.do?id=${obj.id}" title="修改" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="devBoardApply/remove">
+										<a class="icon-btn icon-del" href="javascript:remove('/devBoardApply/remove.html', '${obj.id}');" title="删除" > </a>
+									</@permited>
+								</td>
+							</tr>
+						</#list>
+						
+					</table>
+				</div>
+			</div>
+			<#-- 分页区域 -->
+			<div class="page">
+				<@e.page pageNo=dataPage.pageNo totalPage=dataPage.totalPage
+						url="/devBoardApply/list.do" showPageNum="5" cssClass="pagnation" />
+			</div>
+			<#-- 底部区域 -->
+			<#include "/WEB-INF/common/footer.html"/>
+		</div>
+		
+	</div>
+<#include "/WEB-INF/common/scripts.html"/>
+<@e.cacheUrl/>
+<script>
+function Verify(id){
+	var msg="你确定该申请通过审核?";	
+	$.confirm(msg, function(){
+		 $.ajax({	
+				url : "/devBoardApply/Verify.do",
+				type : 'POST',
+				data : {
+					id:id,
+				},
+				success : function(result) {
+					if (!result.code||result.code == BaseData.suc) {
+						window.location.reload(true);
+					}
+				}
+			});
+	});
+}
+</script>
+</body>
+</html>

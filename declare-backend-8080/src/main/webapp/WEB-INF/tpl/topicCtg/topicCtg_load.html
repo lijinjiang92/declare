@@ -1,0 +1,55 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	<tr>
+		<th>
+			<label>分类名称：</label>
+		</th>
+		<td>
+			${bbsTopicCtg.name}
+		</td>
+		<th>
+			<label>排序值：</label>
+		</th>
+		<td>
+			${bbsTopicCtg.sort}
+		</td>
+	</tr>
+	
+	<tr>
+		
+		<th>
+			<label>创建人：</label>
+		</th>
+		<td>
+			${bbsTopicCtg.creator}
+		</td>
+		<th>
+			<label>创建时间：</label>
+		</th>
+		<td>
+			${bbsTopicCtg.createTime?datetime}
+		</td>
+	</tr>
+	<tr>
+	<th>
+			<label>修改人：</label>
+		</th>
+		<td>
+			${bbsTopicCtg.modifier}
+		</td>
+		<th>
+			<label>修改时间：</label>
+		</th>
+		<td>
+			${bbsTopicCtg.modifyTime?datetime}
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

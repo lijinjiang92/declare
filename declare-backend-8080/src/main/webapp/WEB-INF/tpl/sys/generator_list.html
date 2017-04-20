@@ -1,0 +1,118 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<!DOCTYPE HTML>
+<html>
+<head>
+<#include "/WEB-INF/common/meta.html"/>
+<title>主键生成器</title>
+<#include "/WEB-INF/common/styles.html"/>
+</head>
+<body>
+
+	<#-- 头部区域  -->
+	<#include "/WEB-INF/common/header.html"/>
+	
+	<div id="main">
+		
+		<#-- 左侧菜单区域  -->
+		<#include "/WEB-INF/common/left.html"/>
+		
+		<div id="conent">
+			
+			<#-- 页面标题  -->
+			<h2>主键生成器</h2>
+			
+			<div id="core-div">
+				
+				<#-- 查询区域 -->
+				<div class="control">
+					<form action="/generator/list.html" method="post">
+						<ul class="search">
+							
+							<li class="param-li">
+								生成策略类型：<@e.selectEnum name="generatorType" enumName="GeneratorEnum" 
+											headerKey="" headerValue="--请选择--"
+											selectedValue=generator.generatorType />
+							</li>
+							
+							<li class="param-li">
+								是否循环：<@e.radioEnum name="isCycle" enumName="YesNo" 
+											selectedValue=generator.isCycle />
+							</li>
+							
+							<#-- 查询按钮 -->
+							<li class="search-btns">
+	                        	<button type="submit" class="common-submit btn blue-btn">查询</button>
+	                        	<button type="reset" class="clear-data btn blue-btn">清空</button>
+							</li>
+	                        
+						</ul>
+					</form>	
+				</div>
+				
+				<#-- 列表信息区域 -->
+				<div class="data-div">
+					<table class="ui-table">
+						<tr class="th-row">
+							<th width="30" checkbox="true"></th>
+							<th width="40" row-no="true">序号</th>
+							<th width="100">生成策略</th>
+							<th width="100">初始值</th>
+							<th width="100">当前值</th>
+							<th width="100">最大值</th>
+							<th width="100">批次容量</th>
+							<th width="100">增长值</th>
+							<th width="80" fixed="true" no-tip="true">是否循环</th>
+							<th width="100">创建人</th>
+							<th width="100">创建时间</th>
+							<th width="100" no-tip="true">操作</th>
+						</tr>
+						
+						<#list dataPage.data as obj>
+							<#-- trid 方便快速选择某行 -->
+							<tr trid="${obj.generatorType.className}">
+								<td><input type="checkbox" name="generatorTypes" value="${obj.generatorType.className}" /></td>
+								<td>${obj_index + 1}</td>
+								<td>${obj.generatorType.displayName}</td>
+								<td>${obj.initialVal}</td>
+								<td>${obj.currentVal}</td>
+								<td>${obj.maxVal}</td>
+								<td>${obj.fetchSize}</td>
+								<td>${obj.increment}</td>
+								<td>
+									<#if obj.isCycle.className == "YES">
+										<div class="handler isCycle close yes" />
+									<#elseif obj.isCycle.className == "NO">
+										<div class="handler isCycle open no" />
+									</#if>
+								</td>
+								<td>${obj.creator}</td>
+								<td>${obj.createTime?datetime}</td>
+								<td>
+									<@permited value="generator/load">
+										<a class="icon-btn icon-detail" dialog="/generator/load.html?generatorType=${obj.generatorType.className}" title="详情" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="generator/update">
+										<a class="icon-btn icon-edit" dialog="/generator/update.html?generatorType=${obj.generatorType.className}" title="修改" href="javascript:void(0);" > </a>
+									</@permited>
+								</td>
+							</tr>
+						</#list>
+						
+					</table>
+				</div>
+			</div>
+			<#-- 分页区域 -->
+			<div class="page">
+				<@e.page pageNo=dataPage.pageNo totalPage=dataPage.totalPage
+						url="/generator/list.html" showPageNum="5" cssClass="pagnation" />
+			</div>
+			<#-- 底部区域 -->
+			<#include "/WEB-INF/common/footer.html"/>
+		</div>
+		
+	</div>
+<#include "/WEB-INF/common/scripts.html"/>
+<@e.script src="/js/??sys/generator_list.js" />
+<@e.cacheUrl/>
+</body>
+</html>

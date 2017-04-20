@@ -1,0 +1,95 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 修改区域 -->
+<form class="form-validate" action="/devBoardReport/updating.html" method="post"
+		suc="更新开发板报告表成功" fail="更新开发板报告表失败">
+		
+	<#-- 影藏属性 -->
+	<input type="hidden" name="id" value="${devBoardReport.id}"/>
+	
+	<table class="table-edit">
+		
+		<tr>
+			<th>
+				<label class="required">开发板基础表ID：</label>
+			</th>
+			<td>${devBoardReport.boardBaseId}
+<!-- 				<input type="text" name="boardBaseId" value="${devBoardReport.boardBaseId}" validator="maxlength[32],required" maxlength="32" /> -->
+			</td>
+			<th>
+				<label class="required">开发板产品表ID：</label>
+			</th>
+			<td>${devBoardReport.boardProId}
+<!-- 				<input type="text" name="boardProId" value="${devBoardReport.boardProId}" validator="maxlength[32],required" maxlength="32" /> -->
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">状态：</label>
+			</th>
+			<td>
+				<@e.selectEnum id="status" name="status" enumName="VerifyStatus" 
+					selectedValue="%{devBoardReport.status}" exclude="USER_DELETE,SYS_DELETE" onchange="append()" />
+<!-- 				<input type="text" name="status" value="${devBoardReport.status}" validator="num,max[999999999],required" maxlength="9" /> -->
+			</td>
+			<th>
+				<label class="required">排序值：</label>
+			</th>
+			<td>
+				<input type="text" name="sort" value="${devBoardReport.sort}" validator="num,max[999999999],required" maxlength="9"  />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">标题：</label>
+			</th>
+			<td>
+				<input type="text" name="title" value="${devBoardReport.title}" validator="maxlength[128],required" maxlength="128" />
+			</td>
+			<th>
+				<label class="required">浏览数：</label>
+			</th>
+			<td>
+				<input type="text" name="browseNum" value="${devBoardReport.browseNum}" validator="num,max[999999999999999999],required" maxlength="18" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">内容：</label>
+			</th>
+			<td colspan="3">${devBoardReport.content}
+<!-- 				<input type="text" name="content" value="${devBoardReport.content}" validator="maxlength[65535],required" maxlength="65535" /> -->
+			</td>
+			
+		</tr>
+		
+		<tr>
+			<th>
+				<label>附件URL：</label>
+			</th>
+			<td colspan="3">${devBoardReport.attachment}
+<!-- 				<input type="text" name="attachment" value="${devBoardReport.attachment}" validator="maxlength[1024]" maxlength="1024" /> -->
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<label>备注：</label>
+			</th>
+			<td colspan="3">
+				<textarea id="remark" name="v" cols="60" rows="5" style="width: 670px; height: 190px;">${devBoardReport.remark}</textarea>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

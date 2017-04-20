@@ -1,0 +1,78 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<script type="text/javascript">
+KindEditor.ready(function(K) {
+	window.editor = K.create('#editor_id', {
+		uploadJson: BaseData.imgUrl + '/upload',
+		filePostName: "files",
+		extraFileUploadParams: {
+			"PIC_TYPE": "ic-usual-issue",
+			"responseUrl": BaseData.path + "/errors/kindeditor.html"
+		},
+		//批量上传时删除的参数
+		removeParamsInMultiModel: ["responseUrl"],
+		afterBlur : function() {
+			this.sync();
+		}
+	});
+});
+</script>
+<#-- 新增区域 -->
+<form class="form-validate" action="/usualIssue/adding.html" method="post"
+	suc="新增常见问题成功" fail="新增常见问题失败">
+	
+	<table class="table-edit">
+		
+		<tr>
+			<th>
+				<label class="required">问题类型：</label>
+			</th>
+			<td>
+				<select name="issueTypeId" class="sele" validator='min[1],required' validator-msg='请选择类别'>
+					<option value="0">--请选择--</option>
+					<#list typeList as template>
+						<option value="${template.id}">${template.name}</option>
+					</#list>
+				</select>
+			</td>
+			<th>
+				<label class="required">标题：</label>
+			</th>
+			<td>
+				<input type="text" name="title" validator="maxlength[512],required" maxlength="512" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">发布时间：</label>
+			</th>
+			<td>
+				<input type="text" name="publishTime" validator="required" maxlength="19"  onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:ss:mm'})" />
+			</td>
+			<th>
+				<label class="required">排序值：</label>
+			</th>
+			<td>
+				<input type="text" name="sort" validator="num,max[999999999],required" maxlength="9" />
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<th>
+				<label>内容：</label>
+			</th>
+			<td colspan="3">
+				<textarea id="editor_id" name="content" cols="60" rows="5" style="width: 670px; height: 190px;"></textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

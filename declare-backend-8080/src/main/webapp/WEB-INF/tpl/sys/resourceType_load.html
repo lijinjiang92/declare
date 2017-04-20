@@ -1,0 +1,80 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	<tr>
+		<th>
+			<label>类型名：</label>
+		</th>
+		<td>
+			${resourceType.name}
+		</td>
+		<th>
+			<label>状态：</label>
+		</th>
+		<td>
+			${resourceType.status}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>排序值：</label>
+		</th>
+		<td>
+			${resourceType.sort}
+		</td>
+		<th>
+			<label>创建人ID：</label>
+		</th>
+		<td>
+			${resourceType.creatorId}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>创建人：</label>
+		</th>
+		<td>
+			${resourceType.creator}
+		</td>
+		<th>
+			<label>创建时间：</label>
+		</th>
+		<td>
+			${resourceType.createTime}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>修改人ID：</label>
+		</th>
+		<td>
+			${resourceType.modifierId}
+		</td>
+		<th>
+			<label>修改人：</label>
+		</th>
+		<td>
+			${resourceType.modifier}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>修改时间：</label>
+		</th>
+		<td>
+			${resourceType.modifyTime}
+		</td>
+	</tr>
+		
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

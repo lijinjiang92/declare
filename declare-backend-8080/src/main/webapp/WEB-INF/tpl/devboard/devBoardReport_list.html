@@ -1,0 +1,161 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<!DOCTYPE HTML>
+<html>
+<head>
+<#include "/WEB-INF/common/meta.html"/>
+<title>开发板报告表</title>
+<#include "/WEB-INF/common/styles.html"/>
+<style type="text/css">
+	.icon-approval {
+	    background: rgba(0, 0, 0, 0) url("//data.cloud-alive.com/imgs/operate/approval_normal.png") no-repeat scroll 0 0;
+	}
+
+</style>
+</head>
+<body>
+
+	<#-- 头部区域  -->
+	<#include "/WEB-INF/common/header.html"/>
+	
+	<div id="main">
+		
+		<#-- 左侧菜单区域  -->
+		<#include "/WEB-INF/common/left.html"/>
+		
+		<div id="conent">
+			
+			<#-- 页面标题  -->
+			<h2>开发板报告表</h2>
+			
+			<div id="core-div">
+				
+				<#-- 查询区域 -->
+				<div class="control">
+					<form action="/devBoardReport/list.html" method="post">
+						<ul class="search">
+							
+							<li class="param-li">
+								标题：<input type="text" name="title" value="${devBoardReport.title}" />
+							</li>
+							<li class="param-li"> 
+								状态：
+							    <@e.selectEnum id="status" name="status" enumName="VerifyStatus" headerKey="" 
+							    	headerValue="-请选择-" selectedValue="%{devBoardReport.status}" exclude="USER_DELETE,SYS_DELETE" />
+	                        </li>
+	                        
+							<#-- 查询按钮 -->
+							<li class="search-btns">
+	                        	<button type="submit" class="common-submit btn blue-btn">查询</button>
+	                        	<button type="reset" class="clear-data btn blue-btn">清空</button>
+							</li>
+	                        
+							<#-- 功能按钮区域 -->
+							<li class="handle-btns">
+<!-- 								<@permited value="devBoardReport/add"> -->
+<!-- 	                        		<button type="button" class="btn" dialog="/devBoardReport/add.html">+ 新增</button> -->
+<!-- 	                        	</@permited> -->
+	                        	<@permited value="devBoardReport/remove">
+	                        		<button type="button" class="btn" onclick="batchRemove('devBoardReport/remove.html')">删除</button>
+	                        	</@permited>
+<!-- 	                        	<@permited value="devBoardReport/openClose"> -->
+<!-- 		                        	<button type="button" class="handler open batch btn">启用</button> -->
+<!-- 									<button type="button" class="handler close batch btn">禁用</button> -->
+<!-- 								</@permited> -->
+							</li>
+						</ul>
+					</form>	
+				</div>
+				
+				<#-- 列表信息区域 -->
+				<div class="data-div">
+					<table class="ui-table">
+						<tr class="th-row">
+							<th width="30" checkbox="true"></th>
+							<th width="40" row-no="true">序号</th>
+							<th width="100">标题</th>
+							<th width="100">开发板基础表ID</th>
+							<th width="100">开发板产品表ID</th>
+							<th width="100">状态</th>
+							<th width="100">排序值</th>
+							<th width="100">浏览数</th>
+							<th width="100">附件URL</th>
+							<th width="130" fixed="true" no-tip="true">操作</th>
+						</tr>
+						
+						<#list dataPage.data as obj>
+							<#-- trid 方便快速选择某行 -->
+							<tr trid="${obj.id}">
+								<td><input type="checkbox" name="ids" value="${obj.id}" /></td>
+								<td>${obj_index + 1}</td>
+								<td>${obj.title}</td>
+								<td>${obj.boardBaseId}</td>
+								<td>${obj.boardProId}</td>
+								<td>${obj.status.displayName}</td>
+								<td>${obj.sort}</td>
+								<td>${obj.browseNum}</td>
+								<td>${obj.attachment}</td>
+								<td>
+									<#if obj.status.className == "UNVERIFY">
+										<@permited value="devBoardReport/verify">
+											<a class="icon-btn icon-approval" href="javascript:verify('${obj.id}','VERIFIED')" title="审核" href="javascript:void(0);"> </a>
+										</@permited>
+									</#if>
+									<@permited value="devBoardReport/load">
+										<a class="icon-btn icon-detail" dialog="/devBoardReport/load.html?id=${obj.id}" title="详情" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="devBoardReport/update">
+										<a class="icon-btn icon-edit" dialog="/devBoardReport/update.html?id=${obj.id}" title="修改" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="devBoardReport/remove">
+										<a class="icon-btn icon-del" href="javascript:remove('/devBoardReport/remove.html', '${obj.id}');" title="删除" > </a>
+									</@permited>
+								</td>
+							</tr>
+						</#list>
+						
+					</table>
+				</div>
+			</div>
+			<#-- 分页区域 -->
+			<div class="page">
+				<@e.page pageNo=dataPage.pageNo totalPage=dataPage.totalPage
+						url="/devBoardReport/list.html" showPageNum="5" cssClass="pagnation" />
+			</div>
+			<#-- 底部区域 -->
+			<#include "/WEB-INF/common/footer.html"/>
+		</div>
+		
+	</div>
+<#include "/WEB-INF/common/scripts.html"/>
+<@e.cacheUrl/>
+<script type="text/javascript">
+
+function verify(id,type){
+	var msg;
+	if(type=="VERIFIED"){
+		//msg="审核后将无法修改，确定通过审核？";
+		msg="确定通过审核？";
+	}else{
+		msg="确定撤销审核？";
+	}
+	$.confirm(msg, function(){
+		
+		$.ajax({	
+			url : "/devBoardReport/verify.html",
+			type : 'POST',
+			data : {
+				ids:id,
+			    type:type
+			},
+			success : function(result) {
+				if (!result.code||result.code == BaseData.suc) {
+					window.location.reload(true);
+				}
+			}
+		});
+	});
+}
+
+</script>
+</body>
+</html>

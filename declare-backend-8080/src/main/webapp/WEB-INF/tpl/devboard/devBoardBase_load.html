@@ -1,0 +1,83 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	
+	<tr>
+		<th>
+			<label>品牌：</label>
+		</th>
+		<td>
+			${devBoardBase.brandId}
+		</td>
+		<th>
+			<label>开发板名：</label>
+		</th>
+		<td>
+			${devBoardBase.name}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>生产厂商：</label>
+		</th>
+		<td>
+			${devBoardBase.manufacturer}
+		</td>
+		<th>
+			<label>图片：</label>
+		</th>
+		<td>
+			<@e.imgUrl url=devBoardBase.pic rule="r60c70" />
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>状态：</label>
+		</th>
+		<td>
+			${devBoardBase.status.displayName}
+		</td>
+		<th>
+			<label>排序值：</label>
+		</th>
+		<td>
+			${devBoardBase.sort}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>价格：</label>
+		</th>
+		<td>
+			${devBoardBase.price}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>简介：</label>
+		</th>
+		<td>
+			${devBoardBase.intro}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>备注：</label>
+		</th>
+		<td>
+			${devBoardBase.remark}
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

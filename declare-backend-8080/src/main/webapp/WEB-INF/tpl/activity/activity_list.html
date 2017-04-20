@@ -1,0 +1,487 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<!DOCTYPE HTML>
+<html>
+<head>
+<#include "/WEB-INF/common/meta.html"/>
+<title>活动列表</title>
+<#include "/WEB-INF/common/styles.html"/>
+<@e.link href="http://cdn.diandianme.com/??js/kindeditor/4.1.11/themes/default/default.css" />
+<style type="text/css">
+.create_access {
+	border: 1px dotted #d9dadc;
+	display: block;
+	text-align: center;
+	position: relative;
+	height: 150px;
+	text-align: center;
+}
+
+.create_access_add {
+	border: 2px dotted #d9dadc;
+	display: block;
+	text-align: center;
+	position: relative;
+}
+
+.create_access_slt {
+	border: 1px dotted #d9dadc;
+	display: block;
+	text-align: center;
+	position: static;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+}
+
+.newsInfo td {
+	text-align: left;
+}
+
+.newsInfo input {
+	width: 400px;
+}
+</style>
+</head>
+<body>
+
+	<#-- 头部区域  -->
+	<#include "/WEB-INF/common/header.html"/>
+	
+	<div id="main">
+		
+		<#-- 左侧菜单区域  -->
+		<#include "/WEB-INF/common/left.html"/>
+		
+		<div id="conent">
+			
+			<#-- 页面标题  -->
+			<h2>活动表</h2>
+			
+			<div id="core-div">
+				
+				<#-- 查询区域 -->
+				<div class="control">
+					<form action="/activity/list.html" method="post">
+						<ul class="search">
+							
+							<li class="param-li">
+								标题：<input type="text" name="title" value="${activity.title}" />
+							</li>
+							
+							<#-- 查询按钮 -->
+							<li class="search-btns">
+	                        	<button type="submit" class="common-submit btn blue-btn">查询</button>
+	                        	<button type="reset" class="clear-data btn blue-btn">清空</button>
+							</li>
+	                        
+							<#-- 功能按钮区域 -->
+							<li class="handle-btns">
+								<@permited value="activity/add">
+	                        		<button type="button" class="btn" onclick="showAdd();">+ 新增</button>
+	                        	</@permited>
+	                        	<@permited value="activity/remove">
+	                        		<button type="button" class="btn" onclick="batchRemove('activity/remove.html')">删除</button>
+	                        	</@permited>
+	                        	<!-- <@permited value="activity/openClose">
+		                        	<button type="button" class="handler open batch btn">启用</button>
+									<button type="button" class="handler close batch btn">禁用</button>
+								</@permited> -->
+							</li>
+						</ul>
+					</form>	
+				</div>
+				
+				<#-- 列表信息区域 -->
+				<div class="data-div">
+					<table class="ui-table">
+						<tr class="th-row">
+							<th width="30" checkbox="true"></th>
+							<th width="40" row-no="true">序号</th>
+							<th width="100">标题</th>
+							<th width="100" no-tip="true">图片</th>
+							<th width="100" no-tip="true">状态</th>
+							<th width="100">排序值</th>
+							<th width="130" fixed="true" no-tip="true">操作</th>
+						</tr>
+						
+						<#list dataPage.data as obj>
+							<#-- trid 方便快速选择某行 -->
+							<tr trid="${obj.id}">
+								<td><input type="checkbox" name="ids" value="${obj.id}" /></td>
+								<td>${obj_index + 1}</td>
+								<td>${obj.title}</td>
+								<td id='img${obj.id}'><@e.imgUrl url=obj.pic rule="td70c40"/></td>
+								<td>
+									<#if obj.status.className == "UNVERIFY">
+										待审核
+									<#elseif obj.status.className == "VERIFIED">
+										通过
+									<#elseif obj.status.className == "REJECT">
+										驳回
+									<#elseif obj.status.className == "USER_DELETE">
+										用户删除
+									<#elseif obj.status.className == "SYS_DELETE">
+										系统删除
+									</#if>
+								</td>
+								<td>${obj.sort}</td>
+								<td>
+									<@permited value="activity/load">
+										<a class="icon-btn icon-detail" dialog="/activity/load.html?id=${obj.id}" title="详情" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="activity/update">
+										<a class="icon-btn icon-edit" onclick="showUpdate('${obj.id}');" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="activity/remove">
+										<a class="icon-btn icon-del" href="javascript:remove('/activity/remove.html', '${obj.id}');" title="删除" > </a>
+									</@permited>
+								</td>
+							</tr>
+						</#list>
+						
+					</table>
+				</div>
+			</div>
+			<#-- 分页区域 -->
+			<div class="page">
+				<@e.page pageNo=dataPage.pageNo totalPage=dataPage.totalPage
+						url="/activity/list.html" showPageNum="5" cssClass="pagnation" />
+			</div>
+			<#-- 底部区域 -->
+			<#include "/WEB-INF/common/footer.html"/>
+		</div>
+		
+	</div>
+	
+	<div id="addDiv" class="shifty" style="display:none;">
+		<input type="hidden" id="id"/>
+		<table class="septal-table">
+			<tr>
+				<td valign="top" class="newsInfo"><table class="septal-table"
+						style='width: 820px;' id='editTable'>
+						<tr>
+							<th style="width: 300px;">标题</th>
+							<td><input type="text" id="title" /></td>
+						</tr>
+						<tr>
+							<th>封面<br />（建议尺寸：200像素 * 200像素）
+							</th>
+							<td>
+								<input type="hidden" id="pictureUrl" name="pictureUrl" />
+								<div id="uploadImgs" class="uploadPicDiv">
+									<div id="up_img" class="uploadTitle"></div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>简介</th>
+							<td>
+								<textarea id="intro"
+									style="width: 400px; height: 100px;font-size:13px;">
+								
+								</textarea>
+							</td>
+						</tr>
+						<tr>
+							<th>正文</th>
+							<td>
+								<textarea id="content" cols="60" rows="5"
+									style="width: 690px; height: 300px;">
+								
+								</textarea>
+							</td>
+						</tr>
+					</table></td>
+			</tr>
+		</table>
+		<div style="margin-top: 10px; text-align: center;">
+			<button id="add" display="none" class="btn blue-btn" onclick="saveNews('add');">保存</button>
+			<button id="update" display="none" class="btn blue-btn" onclick="saveNews('update');">保存</button>
+		</div>
+	</div>
+<#include "/WEB-INF/common/scripts.html"/>
+<@e.script src="/js/??jquery-ui-jqLoding.js?date=cc" />
+<@e.cacheUrl/>
+<@e.script src="http://cdn.diandianme.com/??js/kindeditor/4.1.11/kindeditor-all.js" />
+<script>
+	function showAdd(){
+		$("#title").val("");
+		$("#intro").val("");
+		$.dialog({
+			id: "addDialog",
+			content: $("#addDiv"),
+			title: "新增",
+			close: function () {
+				location.href = "/activity/list.do";
+			},
+			init: function() {
+				editor = KindEditor.create('#content', {
+					uploadJson: BaseData.imgUrl + '/upload',
+					filePostName: "files",
+					extraFileUploadParams: {
+						"PIC_TYPE": "ic-activity",
+						"responseUrl": BaseData.path + "/errors/kindeditor.html"
+					},
+					//批量上传时删除的参数
+					removeParamsInMultiModel: ["responseUrl"],
+					afterBlur : function() {
+						this.sync();
+					}
+				});
+			}
+		});
+		editor.html("");
+		$("#add").show();
+		$("#update").hide();
+	}
+	
+	function showUpdate(id){
+		var detail = "";
+		$.ajax({
+			url : '/activity/update.do',
+			type : 'post',
+			data : {id:id},
+			suc : function(data) {
+				$.dialog({
+					id: "updDialog",
+					content: $("#addDiv"),
+					title: "修改",
+					close: function () {
+						location.href = "/activity/list.do";
+					},
+					init: function() {
+						editor = KindEditor.create('#content', {
+							uploadJson: BaseData.imgUrl + '/upload',
+							filePostName: "files",
+							extraFileUploadParams: {
+								"PIC_TYPE": "ic-activity",
+								"responseUrl": BaseData.path + "/errors/kindeditor.html"
+							},
+							//批量上传时删除的参数
+							removeParamsInMultiModel: ["responseUrl"],
+							afterBlur : function() {
+								this.sync();
+							}
+						});
+					}
+				});
+				detail = data.data.datail;
+				$("#id").val(data.data.id);
+				$("#title").val(data.data.title);
+				$("#uploadImgs").uploadImg({
+					picType : "activity",
+					picInput : "pictureUrl",
+					imgRule : "r200c200",
+					picDiv : "uploadImgs",
+					uploadTitle : "up_img",
+					initImg: data.data.pic
+				});
+				editor.html(data.data.detail);
+				$("#intro").val(data.data.intro);
+				$("#add").hide();
+				$("#update").show();
+			}
+			
+		});
+	}
+	
+	$(function() {
+		$("#uploadImgs").uploadImg({
+			picType : "activity",
+			picInput : "pictureUrl",
+			imgRule : "r200c200",
+			picDiv : "uploadImgs",
+			uploadTitle : "up_img"
+		});
+	});
+</script>
+	<script type="text/javascript">
+		var editor;
+	
+		function html_encode(str)   
+		{   
+		  var s = "";   
+		  if (str.length == 0) return "";   
+		  s = str.replace(/&/g, "&gt;");   
+		  s = s.replace(/</g, "&lt;");   
+		  s = s.replace(/>/g, "&gt;");   
+		  s = s.replace(/ /g, "&nbsp;");   
+		  s = s.replace(/\'/g, "&#39;");   
+		  s = s.replace(/\"/g, "&quot;");   
+		  s = s.replace(/\n/g, "<br>");   
+		  return s;   
+		}
+		
+		function saveNews(type) {
+			var title=$("#title").val();
+			var pic = $("#pictureUrl").val();
+			var intro = $("#intro").val();
+			var detail = editor.html();
+			if (title == "") {
+				$.alert("error", "请输入标题", function() {
+					$("#title").focus();
+				});
+				return;
+			}
+			
+			if (pic == "") {
+				$.alert("error", "请上传新闻图片", function() {
+				});
+				return;
+			}
+			
+			if (detail == "") {
+				$.alert("error", "请输入正文", function() {
+					editor.focus();
+				});
+				return;
+			}
+			var url = "";
+			if(type=='add'){
+				url = '/activity/adding.do';
+			}
+			else{
+				url = '/activity/updating.do?id='+$("#id").val();
+			}
+			$.ajax({
+				url : url,
+				type : 'post',
+				data : {title:title,
+						pic:pic,
+						intro:intro,
+						detail:detail},
+				suc : function(data) {
+					if(type=='add')
+						$.dialog.list.addDialog.close();
+					else
+						$.dialog.list.updDialog.close();
+					location.href = "/activity/list.do";
+				}
+				
+			});
+		}
+		
+		String.prototype.replaceAll = function(s1,s2) {
+			
+			return this.replace(new RegExp(s1,"gm"), s2);
+		}
+		
+		String.prototype.template = function() {
+			var args = arguments;
+			return this.replace(/\{(\d+)\}/g, function(m, i) {
+				return args[i];
+			});
+		}
+	
+		//======================================================
+		// Map 类
+		//【参数】无
+		//【返回值】无
+		//【说明】Map 类	 Create by qf
+		//======================================================
+		function Map() {
+			this.elements = new Array();
+	
+			this.size = function() {
+				return this.elements.length;
+			}
+	
+			this.isEmpty = function() {
+				return (this.elements.length < 1);
+			}
+	
+			this.clear = function() {
+				this.elements = new Array();
+			}
+	
+			this.put = function(_key, _value) {
+				this.remove(_key);
+				this.elements.push( {
+					key :_key,
+					value :_value
+				});
+			}
+	
+			this.remove = function(_key) {
+				var bln = false;
+				try {
+					for (i = 0; i < this.elements.length; i++) {
+						if (this.elements[i].key == _key) {
+							this.elements.splice(i, 1);
+							return true;
+						}
+					}
+				} catch (e) {
+					bln = false;
+				}
+				return bln;
+			}
+	
+			this.get = function(_key) {
+				try {
+					for (i = 0; i < this.elements.length; i++) {
+						if (this.elements[i].key == _key) {
+							return this.elements[i].value;
+						}
+					}
+				} catch (e) {
+					return null;
+				}
+			}
+	
+			this.element = function(_index) {
+				if (_index < 0 || _index >= this.elements.length) {
+					return null;
+				}
+				return this.elements[_index];
+			}
+	
+			this.containsKey = function(_key) {
+				var bln = false;
+				try {
+					for (i = 0; i < this.elements.length; i++) {
+						if (this.elements[i].key == _key) {
+							bln = true;
+						}
+					}
+				} catch (e) {
+					bln = false;
+				}
+				return bln;
+			}
+	
+			this.containsValue = function(_value) {
+				var bln = false;
+				try {
+					for (i = 0; i < this.elements.length; i++) {
+						if (this.elements[i].value == _value) {
+							bln = true;
+						}
+					}
+				} catch (e) {
+					bln = false;
+				}
+				return bln;
+			}
+	
+			this.values = function() {
+				var arr = new Array();
+				for (i = 0; i < this.elements.length; i++) {
+					arr.push(this.elements[i].value);
+				}
+				return arr;
+			}
+	
+			this.keys = function() {
+				var arr = new Array();
+				for (i = 0; i < this.elements.length; i++) {
+					arr.push(this.elements[i].key);
+				}
+				return arr;
+			}
+		}
+		//map defined end.
+		
+	</script>
+</body>
+</html>

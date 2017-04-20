@@ -1,0 +1,60 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	<tr>
+		<th>
+			<label>姓名：</label>
+		</th>
+		<td>
+			${contact.name}
+		</td>
+		<th>
+			<label>电话：</label>
+		</th>
+		<td>
+			${contact.phone}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>邮箱：</label>
+		</th>
+		<td>
+			${contact.email}
+		</td>
+		<th>
+			<label>公司：</label>
+		</th>
+		<td>
+			${contact.company}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>留言：</label>
+		</th>
+		<td colspan="3">
+			${contact.messages}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>创建时间：</label>
+		</th>
+		<td colspan="3">
+			${contact.createTime?datetime}
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

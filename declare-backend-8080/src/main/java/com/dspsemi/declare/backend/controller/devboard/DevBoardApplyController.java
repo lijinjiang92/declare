@@ -1,0 +1,116 @@
+package com.dspsemi.declare.backend.controller.devboard;
+
+import static com.dspsemi.common.web.callback.Callbacks.callback;
+import static com.dspsemi.common.web.callback.Callbacks.closeDialog;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dspsemi.common.error.CodeMsg;
+import com.dspsemi.common.lang.dto.DataPage;
+import com.dspsemi.common.validate.Assert;
+import com.dspsemi.common.validate.Validators;
+import com.dspsemi.common.web.BaseController;
+import com.dspsemi.declare.core.enums.DevBoardApplyStatus;
+import com.dspsemi.declare.core.pojo.devboard.DevBoardApply;
+import com.dspsemi.declare.core.service.devboard.DevBoardApplyService;
+
+/**
+ * @author XiaoJin Wang
+ *
+ */
+@Controller
+public class DevBoardApplyController extends BaseController {
+	
+	@Resource
+	private DevBoardApplyService devBoardApplyService;
+
+	/**
+	 * 列表
+	 */
+	public DataPage<DevBoardApply> list(DevBoardApply devBoardApply, DataPage<DevBoardApply> dataPage) throws Exception {
+		
+		return devBoardApplyService.page(devBoardApply.getName(),devBoardApply.getApplyStatus(),dataPage.getPageNo(), dataPage.getPageSize());
+	}
+	
+	/**
+	 * 详情
+	 */
+	public DevBoardApply load(String id) throws Exception {
+		Assert.notBlank(id, "主键参数不能为空");
+		return devBoardApplyService.load(id);
+	}
+	
+	/**
+	 * 执行新增
+	 */
+	public void adding(DevBoardApply devBoardApply, HttpServletResponse response) throws Exception {
+		devBoardApplyService.add(devBoardApply);
+		callback(closeDialog(), response);
+	}
+	
+	/**
+	 * 跳转修改页面
+	 */
+	public DevBoardApply update(String id) throws Exception {
+		return load(id);
+	}
+	
+	/**
+	 * 执行修改
+	 */
+	public void updating(DevBoardApply devBoardApply, HttpServletResponse response) throws Exception {
+		int count = devBoardApplyService.update(devBoardApply);
+		if(count > 0)
+			callback(closeDialog(), response);
+		else
+			callback(closeDialog(CodeMsg.FAIL), response);
+	}
+	
+	/**
+	 * 逻辑删除
+	 */
+	@ResponseBody
+	public CodeMsg remove(String[] ids) throws Exception {
+		Validators.instance(ids)
+			.minLength(1, "主键参数不能传空值")
+			.notEmptyInside("主键参数不能传空值");
+		int count = devBoardApplyService.remove(ids);
+		return gt0(count);
+	}
+	
+	/**
+	 * 物理删除
+	 */
+	@ResponseBody
+	public CodeMsg removePhy(String[] ids) throws Exception {
+		Validators.instance(ids)
+			.minLength(1, "主键参数不能传空值")
+			.notEmptyInside("主键参数不能传空值");
+		int count = devBoardApplyService.removePhy(ids);
+		return gt0(count);
+	}
+
+	/**
+	 * 根据主键ID更新商品状态
+	 * 
+	 * @param ids
+	 * @param type 操作类型 VERIFIED审核  UNVERIFY撤销审核
+	 * @return
+	 */
+	@ResponseBody
+	public CodeMsg Verify(String id) {
+
+		Validators.instance(id).minLength(1, "主键参数不能为空")
+				.notEmptyInside("主键参数不能为空");
+         
+		int count = this.devBoardApplyService.updateStatusById(DevBoardApplyStatus.SUC, id);
+	
+
+		return gt0(count);
+	}
+	
+}

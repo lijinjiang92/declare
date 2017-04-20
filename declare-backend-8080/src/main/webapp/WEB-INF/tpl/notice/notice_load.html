@@ -1,0 +1,72 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	<tr>
+		<th>
+			<label>标题：</label>
+		</th>
+		<td>
+			${notice.title}
+		</td>
+		<th>
+			<label>访问数：</label>
+		</th>
+		<td>
+			${notice.visitNum}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>内容：</label>
+		</th>
+		<td>
+			${notice.content}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>发布时间：</label>
+		</th>
+		<td>
+			${notice.publicTime?datetime}
+		</td>
+	</tr>
+	
+	<tr>
+		
+		<th>
+			<label>创建人：</label>
+		</th>
+		<td>
+			${notice.creator}
+		</td>
+		<th>
+			<label>创建时间：</label>
+		</th>
+		<td>
+			${notice.createTime?datetime}
+		</td>
+	</tr>
+	<tr>
+	<th>
+			<label>修改人：</label>
+		</th>
+		<td>
+			${notice.modifier}
+		</td>
+		<th>
+			<label>修改时间：</label>
+		</th>
+		<td>
+			${notice.modifyTime?datetime}
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,116 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	<tr>
+		<th>
+			<label>开发板名称：</label>
+		</th>
+		<td>
+			${devBoardApply.name}
+		</td>
+		<th>
+			<label>供应商名称：</label>
+		</th>
+		<td>
+			${devBoardApply.manufacturer}
+		</td>
+	</tr>	
+	<tr>
+		<th>
+			<label>申请单价：</label>
+		</th>
+		<td>
+			${devBoardApply.applyPrice}
+		</td>
+		<th>
+			<label>申请数：</label>
+		</th>
+		<td>
+			${devBoardApply.applyNum}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>申请总价：</label>
+		</th>
+		<td>
+			${devBoardApply.applyTotalPrice}
+		</td>
+		<th>
+			<label>项目名：</label>
+		</th>
+		<td>
+			${devBoardApply.projectName}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>申请理由：</label>
+		</th>
+		<td>
+			${devBoardApply.applyReason}
+		</td>
+		<th>
+			<label>处理状态：</label>
+		</th>
+		<td>
+			${devBoardApply.applyStatus.displayName}
+		</td>
+		
+	</tr>
+	<tr>
+		<th>
+			<label>申请人：</label>
+		</th>
+		<td>
+			${devBoardApply.creator}
+		</td>
+		<th>
+			<label>申请时间：</label>
+		</th>
+		<td>
+			${devBoardApply.createTime?datetime}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>配送地址：</label>
+		</th>
+		<td>
+			${devBoardApply.deliveryAddr}
+		</td>
+		<th>
+			<label>联系电话：</label>
+		</th>
+		<td>
+			${devBoardApply.phone}
+		</td>
+	</tr>
+	<tr>
+	<th>
+			<label>项目描述：</label>
+		</th>
+		<td colspan="3">
+			${devBoardApply.projectDesc}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>备注：</label>
+		</th>
+		<td colspan="3">
+			${devBoardApply.remark}
+		</td>
+		
+	</tr>
+		
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

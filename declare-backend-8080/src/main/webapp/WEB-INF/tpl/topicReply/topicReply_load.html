@@ -1,0 +1,43 @@
+<#include "/WEB-INF/common/core.ftl"/> <#-- 详细信息区域 -->
+<div style="width: 1200px; height: 600px;">
+	<div style="height: 550px;">
+		<table class="table-edit">
+
+			<tr>
+				<th><label>当前主题：</label></th>
+				<td style="width: 300px">${bbsTopic.title}</td>
+				<th><label>发帖人：</label></th>
+				<td style="width: 100px">${bbsTopic.creator}</td>
+				<th><label>发帖时间：</label></th>
+				<td style="width: 240px">${bbsTopic.createTime?datetime}</td>
+				<th><label>内容：</label></th>
+				<td style="width: 500px">${bbsTopic.content}</td>
+			</tr>
+
+			<#list bbsTopic.bbsTopicReplys as obj> <#if topicReplyId == obj.id>
+			<tr style="background-color: #dddddd">
+				<th><label>当前选中：</label></th>
+				<td></td>
+				<th><label>回复人：</label></th>
+				<td>${obj.creator}</td>
+				<th><label>回复时间：</label></th>
+				<td>${obj.createTime?datetime}</td>
+				<th><label>内容：</label></th>
+				<td>${obj.content}</td>
+			</tr>
+			<#else>
+			<tr>
+				<th><label></label></th>
+				<td></td>
+				<th><label>回复人：</label></th>
+				<td>${obj.creator}</td>
+				<th><label>回复时间：</label></th>
+				<td>${obj.createTime?datetime}</td>
+				<th><label>内容：</label></th>
+				<td>${obj.content}</td>
+			</tr>
+			</#if> </#list>
+		</table>
+	</div>
+	<div class="dialog-cancel confirm-btn">关闭</div>
+</div>

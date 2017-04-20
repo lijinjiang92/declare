@@ -1,0 +1,135 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<!DOCTYPE HTML>
+<html>
+<head>
+<#include "/WEB-INF/common/meta.html"/>
+<title>回复管理</title>
+<#include "/WEB-INF/common/styles.html"/>
+</head>
+<body>
+
+	<#-- 头部区域  -->
+	<#include "/WEB-INF/common/header.html"/>
+	
+	<div id="main">
+		
+		<#-- 左侧菜单区域  -->
+		<#include "/WEB-INF/common/left.html"/>
+		
+		<div id="conent">
+			
+			<#-- 页面标题  -->
+			<h2>帖子</h2>
+			
+			<div id="core-div">
+				
+				<#-- 查询区域 -->
+				<div class="control">
+					<form action="/topicReply/list.do" method="post">
+						<ul class="search">
+							
+							<li class="param-li">
+								内容：<input type="text" name="content" />
+							</li>
+							
+							<li class="param-li">
+								创建人：<input type="text" name="creator" />
+							</li>
+							
+							<!-- <li class="param-li">
+								用户名：<input type="text" name="username" value="${user.username}" />
+							</li>
+							
+							<li class="param-li">
+								昵称：<input type="text" name="nickname" value="${user.nickname}" />
+							</li>
+							
+							<li class="param-li">
+								真实姓名：<input type="text" name="realname" value="${user.realname}" />
+							</li>
+							
+							<li class="param-li">
+								状态：<@e.radioEnum name="status" enumName="CloseStatus" 
+										selectedValue=user.status exclude="DELETE" />
+							</li>
+							
+							<li class="param-li">
+								邮箱：<input type="text" name="email" value="${user.email}" />
+							</li>
+							
+							<li class="param-li">
+								手机号：<input type="text" name="mobile" value="${user.mobile}" />
+							</li> -->
+							
+							<#-- 查询按钮 -->
+							<li class="search-btns">
+								<button type="submit" class="common-submit btn blue-btn">查询</button>
+	                        	<button type="reset" class="clear-data btn blue-btn">清空</button>
+							</li>
+	                        
+							<#-- 功能按钮区域 -->
+							<li class="handle-btns">
+								<@permited value="topic/delete">
+	                        		<button type="button" class="btn" onclick="batchRemove('topicReply/deleting.do')">删除</button>
+	                        	</@permited>
+							</li>
+						</ul>
+					</form>	
+				</div>
+				
+				<#-- 列表信息区域 -->
+				<div class="data-div">
+					<table class="ui-table">
+						<tr class="th-row">
+							<th width="30" checkbox="true"></th>
+							<th width="40" row-no="true">序号</th>
+							<th width="100">内容</th>
+							<th width="100">创建人</th>
+							<th width="100">创建时间</th>
+							<th width="100">状态</th>
+							<th width="100" fixed="true" no-tip="true">操作</th>
+						</tr>
+						
+						<#list dataPage.data as obj>
+							<#-- trid 方便快速选择某行 -->
+							<tr trid="${obj.id}">
+								<td><input type="checkbox" name="ids" value="${obj.id}" /></td>
+								<td>${obj_index + 1}</td>
+								<td>${obj.content}</td>
+								<td>${obj.creator}</td>
+								<td>${obj.createTime?datetime}</td>
+								<td>
+									<#if obj.status.className == "NORMAL">
+										正常
+									<#elseif obj.status.className == "USER_DELETE">
+										用户删除
+									<#elseif obj.status.className == "MODERATORS_DELETE">
+										版主删除
+									<#elseif obj.status.className == "SYS_DELETE">
+										系统删除
+									</#if>
+								</td>
+								<td>
+									<!-- <@permited value="topicReply/load"> -->
+										<a class="icon-btn icon-detail" dialog="/topicReply/load.html?id=${obj.id}" title="查看详情" href="javascript:void(0);" > </a>
+									<!-- </@permited> -->
+								</td>
+							</tr>
+						</#list>
+						
+					</table>
+				</div>
+			</div>
+			<#-- 分页区域 -->
+			<div class="page">
+				<@e.page pageNo=dataPage.pageNo totalPage=dataPage.totalPage
+						url="/topicReply/list.html" showPageNum="5" cssClass="pagnation" />
+			</div>
+			<#-- 底部区域 -->
+			<#include "/WEB-INF/common/footer.html"/>
+		</div>
+		
+	</div>
+<#include "/WEB-INF/common/scripts.html"/>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<#include "/WEB-INF/common/core.ftl"/> <#-- 详细信息区域 -->
+<table class="table-edit">
+
+	<tr>
+		<th><label>标题：</label></th>
+		<td colspan="3">${bbsTopic.title}</td>
+	</tr>
+
+	<tr>
+		<th><label>状态：</label></th>
+		<td>${bbsTopic.status.displayName}</td>
+		<th><label>排序值：</label></th>
+		<td>${bbsTopic.sort}</td>
+	</tr>
+
+	<tr>
+		<th><label>发帖人：</label></th>
+		<td>${bbsTopic.creator}</td>
+		<th><label>发帖时间：</label></th>
+		<td>${bbsTopic.createTime?datetime}</td>
+	</tr>
+
+	<tr>
+		<th><label>修改人：</label></th>
+		<td>${bbsTopic.modifier}</td>
+		<th><label>修改时间：</label></th>
+		<td>${bbsTopic.modifyTime?datetime}</td>
+	</tr>
+	
+	<tr>
+		<th><label>内容：</label></th>
+		<td colspan="3">${bbsTopic.content}</td>
+	</tr>
+
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

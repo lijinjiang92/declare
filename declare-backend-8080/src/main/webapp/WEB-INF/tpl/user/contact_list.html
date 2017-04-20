@@ -1,0 +1,105 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<!DOCTYPE HTML>
+<html>
+<head>
+<#include "/WEB-INF/common/meta.html"/>
+<title>联系我们</title>
+<#include "/WEB-INF/common/styles.html"/>
+</head>
+<body>
+
+	<#-- 头部区域  -->
+	<#include "/WEB-INF/common/header.html"/>
+	
+	<div id="main">
+		
+		<#-- 左侧菜单区域  -->
+		<#include "/WEB-INF/common/left.html"/>
+		
+		<div id="conent">
+			
+			<#-- 页面标题  -->
+			<h2>联系我们</h2>
+			
+			<div id="core-div">
+				
+				<#-- 查询区域 -->
+				<div class="control">
+					<form action="/contact/list.html" method="post">
+						<ul class="search">
+							
+							<li class="param-li">
+								用户组名：<input type="text" name="name" value="${name}" />
+							</li>
+							
+							<#-- 查询按钮 -->
+							<li class="search-btns">
+								<button type="submit" class="common-submit btn blue-btn">查询</button>
+	                        	<button type="reset" class="clear-data btn blue-btn">清空</button>
+							</li>
+	                        
+							<#-- 功能按钮区域 -->
+							<li class="handle-btns">
+								<@permited value="user/remove">
+	                        		<button type="button" class="btn" onclick="batchRemove('contact/remove.html')">删除</button>
+	                        	</@permited>
+							</li>
+						</ul>
+					</form>	
+				</div>
+				
+				<#-- 列表信息区域 -->
+				<div class="data-div">
+					<table class="ui-table">
+						<tr class="th-row">
+							<th width="30" checkbox="true"></th>
+							<th width="40" row-no="true">序号</th>
+							<th width="100">姓名</th>
+							<th width="100">电话</th>
+							<th width="100">Mail</th>
+							<th width="100">公司</th>
+							<th width="100">留言</th>
+							<th width="100">创建时间</th>
+							<th width="150" fixed="true" no-tip="true">操作</th>
+						</tr>
+						
+						<#list dataPage.data as obj>
+							<#-- trid 方便快速选择某行 -->
+							<tr trid="${obj.id}">
+								<td><input type="checkbox" name="ids" value="${obj.id}" /></td>
+								<td>${obj_index + 1}</td>
+								<td>${obj.name}</td>
+								<td>${obj.phone}</td>
+								<td>${obj.email}</td>
+								<td>${obj.company}</td>
+								<td>${obj.messages}</td>
+								<td>${obj.createTime?datetime}</td>
+								<td>
+									<@permited value="user/load">
+										<a class="icon-btn icon-detail" dialog="/contact/load.html?id=${obj.id}" title="详情" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="user/remove">
+										<a class="icon-btn icon-del" href="javascript:remove('/contact/remove.html', '${obj.id}');" title="删除" > </a>
+									</@permited>
+								</td>
+							</tr>
+						</#list>
+						
+					</table>
+				</div>
+			</div>
+			<#-- 分页区域 -->
+			<div class="page">
+				<@e.page pageNo=dataPage.pageNo totalPage=dataPage.totalPage
+						url="/contact/list.html" showPageNum="5" cssClass="pagnation" />
+			</div>
+			<#-- 底部区域 -->
+			<#include "/WEB-INF/common/footer.html"/>
+		</div>
+		
+	</div>
+<#include "/WEB-INF/common/scripts.html"/>
+<@e.script src="/js/??user/user_list.js" />
+<@e.cacheUrl/>
+</body>
+</html>

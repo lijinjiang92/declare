@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.dspsemi.declare.core.dao.location.ProvinceMapper">
+	
+	
+
+	<select id="list4O2O" resultType="Province" parameterType="map">
+		 <![CDATA[  
+			SELECT id,name,pinyin,status,regionId as parentid FROM l_province
+			union all
+			select id,name,pinyin,status,provinceId as parentid from l_city
+			union all
+			select id,name,pinyin,status,cityId as parentid from l_district
+			union all
+			select id,name,pinyin,status,districtId as parentid from l_area
+		 ]]> 
+		 order by id
+			LIMIT #{startRow},#{pageSize}
+	</select>
+
+	
+</mapper>
+

@@ -1,0 +1,101 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 新增区域 -->
+<form class="form-validate" action="/devBoardApply/adding.html" method="post"
+	suc="新增开发板申请表成功" fail="新增开发板申请表失败">
+	
+	<table class="table-edit">
+		
+		<tr>
+			<th>
+				<label class="required">开发板基础表ID：</label>
+			</th>
+			<td>
+				<input type="text" name="boardBaseId" validator="maxlength[32],required" maxlength="32" />
+			</td>
+			<th>
+				<label class="required">开发板产品表ID：</label>
+			</th>
+			<td>
+				<input type="text" name="boardProId" validator="maxlength[32],required" maxlength="32" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">配送地址ID：</label>
+			</th>
+			<td>
+				<input type="text" name="deliveryAddrId" validator="num,max[999999999999999999],required" maxlength="18" />
+			</td>
+			<th>
+				<label class="required">状态：</label>
+			</th>
+			<td>
+				<input type="text" name="status" validator="num,max[999999999],required" maxlength="9" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label>申请单价：</label>
+			</th>
+			<td>
+				<input type="text" name="applyPrice" validator="decemal,max[99999999999999999999.99999]" maxlength="26" />
+			</td>
+			<th>
+				<label class="required">申请数：</label>
+			</th>
+			<td>
+				<input type="text" name="applyNum" validator="num,max[999999999999999999],required" maxlength="18" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label>申请总价：</label>
+			</th>
+			<td>
+				<input type="text" name="applyTotalPrice" validator="decemal,max[99999999999999999999.99999]" maxlength="26" />
+			</td>
+			<th>
+				<label class="required">项目名：</label>
+			</th>
+			<td>
+				<input type="text" name="projectName" validator="maxlength[128],required" maxlength="128" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">申请理由：</label>
+			</th>
+			<td>
+				<input type="text" name="applyReason" validator="maxlength[512],required" maxlength="512" />
+			</td>
+			<th>
+				<label class="required">项目描述：</label>
+			</th>
+			<td>
+				<input type="text" name="projectDesc" validator="maxlength[1024],required" maxlength="1024" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label>备注：</label>
+			</th>
+			<td>
+				<input type="text" name="remark" validator="maxlength[512]" maxlength="512" />
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

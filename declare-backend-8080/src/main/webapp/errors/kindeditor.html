@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Pragma" CONTENT="no-cache" />
+<meta http-equiv="Cache-Control" CONTENT="no-cache" />
+<meta http-equiv="Expires" CONTENT="0" />
+<title>callback</title>
+<script type="text/javascript">
+function getParam(name) {
+    var params = window.location.search,
+    	reg = new RegExp(name + "=([^&?]*)"),
+    	matchs;
+    return (params && (matchs = params.match(reg))) ? matchs[1] : null;
+}
+var callback = function() {
+    var data = getParam("back_data");
+    if(data) {
+	    data = decodeURIComponent(data);
+    }
+    document.getElementsByTagName("body")[0].innerHTML = '<pre>' + data  + '</pre>';
+};
+</script>
+</head>
+<body onload="callback();">
+</body>
+</html>

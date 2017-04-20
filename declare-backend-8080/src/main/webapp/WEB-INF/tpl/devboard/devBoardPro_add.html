@@ -1,0 +1,162 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<script type="text/javascript">
+$(function() {
+	KindEditor.ready(function(K) {
+		window.editor = K.create('textarea[name="description"]', {
+			uploadJson: BaseData.imgUrl + '/upload',
+			filePostName: "files",
+			extraFileUploadParams: {
+				"PIC_TYPE": "ic-board",
+				"responseUrl": BaseData.path + "/errors/kindeditor.html"
+			},
+			//批量上传时删除的参数
+			removeParamsInMultiModel: ["responseUrl"],
+			afterBlur : function() {
+				this.sync();
+			}
+		});
+	});
+	$("#uploadImgs").uploadImg({
+		picType : "ic-board",
+		picInput : "pic",
+		imgRule : "r150c150",
+		picDiv : "uploadImgs",
+		uploadTitle : "up_img"
+	});
+});
+</script>
+<#-- 新增区域 -->
+<form class="form-validate" action="/devBoardPro/adding.html" method="post"
+	suc="新增开发板产品表成功" fail="新增开发板产品表失败">
+	
+	<table class="table-edit">
+		
+		<tr>
+			<th>
+				<label class="required">开发板：</label>
+			</th>
+			
+			<td>
+				<select name="boardBaseId" class="sele" validator='min[1],required' validator-msg='请选择类别' style="width: 300px;" >
+					<option value="0">--请选择--</option>
+					<#list baseList as template>
+						<option value="${template.id}">${template.name}</option>
+					</#list>
+				</select>
+			</td>
+			<th>
+				<label class="required">标题：</label>
+			</th>
+			<td>
+				<input type="text" name="title" validator="maxlength[128],required" maxlength="128"  style="width: 300px;"/>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">图片：</label>
+			</th>
+			<td>
+				<input type="hidden" id="pic" name="pic" validator="maxlength[512]" maxlength="512"/>
+				<div id="uploadImgs" class="uploadPicDiv">
+					<div id="up_img" class="uploadTitle"></div>
+				</div>
+			</td>
+			<th>
+				<label class="required">产品类型：</label>
+			</th>
+			<td>
+				<@e.selectEnum name="proType" enumName="DevBoardProType" tagAttr="validator='min[1],required' validator-msg='请选择类型'"
+										headerKey="" headerValue="--请选择--"
+								 />
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<label>市场价：</label>
+			</th>
+			<td>
+				<input type="text" name="marketPrice" validator="decemal,max[99999999999999999999.99999]" maxlength="26" />
+			</td>
+			<th>
+				<label>申请价：</label>
+			</th>
+			<td>
+				<input type="text" name="applyPrice" validator="decemal,max[99999999999999999999.99999]" maxlength="26" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">可申请总数：</label>
+			</th>
+			<td>
+				<input type="text" name="totalNum" validator="num,max[999999999999999999],required" maxlength="18" />
+			</td>
+			<th>
+				<label class="required">每人最多申请数：</label>
+			</th>
+			<td>
+				<input type="text" name="maxNumPer" validator="num,max[999999999999999999],required" maxlength="18" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">开始时间：</label>
+			</th>
+			<td>
+				<input type="text" name="beginTime" validator="required" maxlength="19" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:ss:mm'})" />
+			</td>
+			<th>
+				<label class="required">截止时间：</label>
+			</th>
+			<td>
+				<input type="text" name="endTime" validator="required" maxlength="19" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:ss:mm'})" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">排序值：</label>
+			</th>
+			<td>
+				<input type="text" name="sort" validator="num,max[999999999],required" maxlength="9" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label>简介(200字以内)：</label>
+			</th>
+			<td colspan="3">
+				<textarea id="intro"  validator="required,maxlength[200]" name="intro" cols="60" rows="5" style="width: 750px; height: 100px;"></textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label>描述：</label>
+			</th>
+			<td colspan="3">
+				<textarea id="description"   validator="required" name="description" cols="60" rows="5" style="width: 750px; height: 300px;"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<label>备注：</label>
+			</th>
+			<td colspan="3">
+				<textarea id="remark" name="remark" cols="60" rows="5" style="width: 750px; height: 50px;"></textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

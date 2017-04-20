@@ -1,0 +1,83 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<script type="text/javascript">
+var excuse = $('.excuse');
+$(function() {
+	
+	excuse.hide();
+	
+});
+function typeChanged(obj) {
+	var cuObj = $(obj);
+
+	var selectedType = cuObj.val();
+	
+	if(selectedType=="REJECT"){
+		excuse.show();
+	}else{
+		excuse.hide();
+	}
+	/* if (selectedType == "WEIXIN") {
+
+		saleTypeGroup.hide();
+	} else {
+		saleTypeGroup.show();
+	} */
+}
+
+</script>
+
+<#-- 修改区域 -->
+<form class="form-validate" action="/devBoardApply/updating.html" method="post"
+		suc="更新开发板申请表成功" fail="更新开发板申请表失败">
+		
+	<#-- 影藏属性 -->
+	<input type="hidden" name="id" value="${devBoardApply.id}"/>
+	
+	<table class="table-edit">
+		
+		<tr>
+		<th>
+				<label class="required">开发板名称：</label>
+			</th>
+			<td>
+              ${devBoardApply.name}
+			</td>
+			<th>
+				<label class="required">申请状态：</label>
+			</th>
+			<td>
+				<@e.selectEnum enumName="DevBoardApplyStatus" id="applyStatus" name="applyStatus" 
+									  	selectedValue="%{devBoardApply.applyStatus}" 
+								  	headerKey="" headerValue="--请选择--"  <!-- onchange='javascript:typeChanged(this);' -->/>
+			</td>
+			
+		</tr>
+		
+		<tr class="excuse">
+			<th>
+				<label class="required">驳回理由：</label>
+			</th>
+			<td colspan="3">
+				<input type="text" name="deliveryAddrId" value="${devBoardApply.deliveryAddrId}"  maxlength="200" />
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<label>备注：</label>
+			</th>
+			<td colspan="4">
+				<input type="text" name="remark" value="${devBoardApply.remark}" validator="maxlength[512]" maxlength="512" />
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

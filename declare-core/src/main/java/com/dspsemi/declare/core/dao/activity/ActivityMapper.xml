@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dspsemi.declare.core.dao.activity.ActivityMapper">
+
+	<select id="dynamic4index" resultType="com.dspsemi.declare.core.bo.DynamicBo">
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					sn.id AS id,
+					sn.title AS title,
+					sn.createTime AS time,
+					"1" AS type
+				FROM
+					sys_news sn
+				WHERE
+					sn.`status` = 0
+				UNION
+					SELECT
+						aa.id AS id,
+						aa.title AS title,
+						aa.createTime AS time,
+						"2" AS type
+					FROM
+						act_activity aa
+					WHERE
+						aa.`status` = 0
+			) t
+		ORDER BY
+			t.time DESC
+		LIMIT 5
+	</select>
+
+
+</mapper>
+

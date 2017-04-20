@@ -1,0 +1,62 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<@e.script src="/js/??bbs/bbsSection_addupdate.js" />
+<#-- 新增区域 -->
+<form class="form-validate" action="/bbsSection/adding.html" method="post"
+	suc="新增版块成功" fail="新增版块失败">
+	
+	<table class="table-edit">
+		<tr>
+			<th>
+				<label class="required">名称：</label>
+			</th>
+			<td>
+				<input type="text" name="name" validator="required,fun.existname"  maxlength="512" />
+			</td>
+			<th>
+				<label class="required">版块分类：</label>
+			</th>
+			<td>
+					<select id="ctgId" name="ctgId" validator="min[1],required" validator-msg="请选择版块分类">
+					<option value="">--请选择版块分类--</option>
+					<#list bbsSectionCtg as obj>
+						<option value="${obj.id}">${obj.name}</option>
+					</#list>
+				</select>
+			</td>
+		</tr>
+		
+		<tr>
+		<th>
+				<label class="required">排序值：</label>
+			</th>
+			<td>
+					<input type="text" name="sort" validator="num,max[999999999],required"  maxlength="512" />
+			</td>
+			<th>
+				<label class="required">状态：</label>
+			</th>
+			<td colspan="3">
+				<@e.radioEnum name="status" enumName="CloseStatus" selectedValue="OPEN"
+						exclude="DELETE" tagAttr="validator='minlength[1],required' validator-msg='请选择状态'"
+						tagAttrIndex="last" />
+			</td>
+			
+		</tr>
+		<tr>
+			<th>
+				<label class="required">描述：</label>
+			</th>
+			<td colspan="3">
+				<textarea maxlength="200" validator="required"  name="describes"> </textarea>
+			</td>
+			
+		</tr>
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

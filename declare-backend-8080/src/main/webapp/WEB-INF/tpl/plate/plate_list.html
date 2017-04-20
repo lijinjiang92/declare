@@ -1,0 +1,140 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<!DOCTYPE HTML>
+<html>
+<head>
+<#include "/WEB-INF/common/meta.html"/>
+<title>用户</title>
+<#include "/WEB-INF/common/styles.html"/>
+</head>
+<body>
+
+	<#-- 头部区域  -->
+	<#include "/WEB-INF/common/header.html"/>
+	
+	<div id="main">
+		
+		<#-- 左侧菜单区域  -->
+		<#include "/WEB-INF/common/left.html"/>
+		
+		<div id="conent">
+			
+			<#-- 页面标题  -->
+			<h2>板块</h2>
+			
+			<div id="core-div">
+				
+				<#-- 查询区域 -->
+				<div class="control">
+					<form action="/user/list.html" method="post">
+						<ul class="search">
+							
+							<li class="param-li">
+								用户组名：<input type="text" name="groupName" value="${user.groupName}" />
+							</li>
+							
+							
+							<li class="param-li">
+								手机号：<input type="text" name="mobile" value="${user.mobile}" />
+							</li>
+							
+							<#-- 查询按钮 -->
+							<li class="search-btns">
+								<button type="submit" class="common-submit btn blue-btn">查询</button>
+	                        	<button type="reset" class="clear-data btn blue-btn">清空</button>
+							</li>
+	                        
+							<#-- 功能按钮区域 -->
+							<li class="handle-btns">
+								<@permited value="notice/add">
+		                        	<button type="button" class="btn" dialog="/user/add.html">+ 新增</button>
+								</@permited>
+								<@permited value="notice/remove">
+	                        		<button type="button" class="btn" onclick="batchRemove('user/remove.html')">删除</button>
+	                        	</@permited>
+	                        	<@permited value="notice/openClose">
+		                        	<button type="button" class="handler open batch btn">启用</button>
+									<button type="button" class="handler close batch btn">禁用</button>
+								</@permited>
+							</li>
+						</ul>
+					</form>	
+				</div>
+				
+				<#-- 列表信息区域 -->
+				<div class="data-div">
+					<table class="ui-table"> 
+						<tr class="th-row">
+							<th width="30" checkbox="true"></th>
+							<th width="40" row-no="true">序号</th>
+							<th width="100">用户组名</th>
+							<th width="100">员工编号</th>
+							<th width="100">用户名</th>
+							<th width="100">昵称</th>
+							<th width="100">真实姓名</th>
+							<th width="80" fixed="true" no-tip="true">启动/禁用</th>
+							<th width="100">排序值</th>
+							<th width="100">邮箱</th>
+							<th width="100">手机号</th>
+							<th width="100">错误登录</th>
+							<th width="100">创建人</th>
+							<th width="100">创建时间</th>
+							<th width="150" fixed="true" no-tip="true">操作</th>
+						</tr>
+						
+						<#list dataPage.data as obj>
+							<#-- trid 方便快速选择某行 -->
+							<tr trid="${obj.id}">
+								<td><input type="checkbox" name="ids" value="${obj.id}" /></td>
+								<td>${obj_index + 1}</td>
+								<td>${obj.groupName}</td>
+								<td>${obj.userNo}</td>
+								<td>${obj.username}</td>
+								<td>${obj.nickname}</td>
+								<td>${obj.realname}</td>
+								<td>
+									<#if obj.status.className == "OPEN">
+										<div class="handler close yes status" />
+									<#elseif obj.status.className == "CLOSE">
+										<div class="handler open no status" />
+									</#if>
+								</td>
+								<td>${obj.sort}</td>
+								<td>${obj.email}</td>
+								<td>${obj.mobile}</td>
+								<td>${obj.loginFail}</td>
+								<td>${obj.creator}</td>
+								<td>${obj.createTime?datetime}</td>
+								<td>
+									<@permited value="notice/load">
+										<a class="icon-btn icon-detail" dialog="/user/load.html?id=${obj.id}" title="详情" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="notice/update">
+										<a class="icon-btn icon-edit" dialog="/user/update.html?id=${obj.id}" title="修改" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="notice/remove">
+										<a class="icon-btn icon-del" href="javascript:remove('/user/remove.html', '${obj.id}');" title="删除" > </a>
+									</@permited>
+									<@permited value="notice/listByUserId">
+										<a class="icon-btn icon-cfg" href="javascript:cfgRoles('${obj.id}');" title="配置角色" > </a>
+									</@permited>
+								</td>
+							</tr>
+						</#list>
+						
+					</table>
+				</div>
+			</div>
+			<#-- 分页区域 -->
+			<div class="page">
+				<@e.page pageNo=dataPage.pageNo totalPage=dataPage.totalPage
+						url="/notice/list.html" showPageNum="5" cssClass="pagnation" />
+			</div>
+			<#-- 底部区域 -->
+			<#include "/WEB-INF/common/footer.html"/>
+		</div>
+		
+	</div>
+<#include "/WEB-INF/common/scripts.html"/>
+<@e.cacheUrl/>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.dspsemi.declare.core.dao.location.CityMapper">
+	<select id="getMaxCode" resultType="java.lang.String" parameterType="java.lang.Integer">
+			SELECT 
+			CONCAT(
+				CAST(c.areaCode as SIGNED),
+				( 
+					IFNULL(
+							MAX(
+									CAST(SUBSTR(s.shopNo,LENGTH(CAST(c.areaCode as SIGNED))+1,LENGTH(s.shopNo) - LENGTH(CAST(c.areaCode as SIGNED))) AS SIGNED)
+								 ),10000
+					)+1
+				)
+			) FROM l_city c
+			LEFT JOIN s_shop s ON s.cityId=c.id
+			WHERE c.id= #{cityId}
+	</select>
+	
+	<select id="getCityForAPP" resultType="com.dspsemi.declare.core.bo.CityBo" >
+	SELECT  c.id,c.name,c.isHot,c.pinyin FROM l_city c
+		<if test="cityName != null">
+			WHERE c.name like #{cityName} or c.pinyin like #{cityName}
+		</if>
+	ORDER BY c.pinyin 
+	</select>
+</mapper>
+

@@ -1,0 +1,92 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	<tr>
+		<th>
+			<label>名称：</label>
+		</th>
+		<td>
+			${bbsSection.name}
+		</td>
+		<th>
+			<label>版块分类名称：</label>
+		</th>
+		<td>
+			${bbsSection.bbsSectionCtg.name}
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<th>
+			<label>主题数：</label>
+		</th>
+		<td>
+			${bbsSection.topicNum}
+		</td>
+			<th>
+			<label>关注数：</label>
+		</th>
+		<td>
+			${bbsSection.concernNum}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>排序值：</label>
+		</th>
+		<td>
+			${bbsSection.sort}
+		</td>
+		<th>
+			<label>状态：</label>
+		</th>
+		<td>
+				${bbsSection.status.displayName}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>描述：</label>
+		</th>
+		<td>
+			${bbsSection.describes}
+		</td>
+	</tr>
+	<tr>
+		
+		<th>
+			<label>创建人：</label>
+		</th>
+		<td>
+			${bbsSection.creator}
+		</td>
+		<th>
+			<label>创建时间：</label>
+		</th>
+		<td>
+			${bbsSection.createTime?datetime}
+		</td>
+	</tr>
+	<tr>
+	<th>
+			<label>修改人：</label>
+		</th>
+		<td>
+			${bbsSection.modifier}
+		</td>
+		<th>
+			<label>修改时间：</label>
+		</th>
+		<td>
+			${bbsSection.modifyTime?datetime}
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

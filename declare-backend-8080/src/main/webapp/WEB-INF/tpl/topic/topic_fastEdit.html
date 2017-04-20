@@ -1,0 +1,73 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<#-- 详细信息区域 -->
+<@e.script src="/js/??topic/topic_fastEdit.js" />
+<div>
+	<input type='hidden' id="topicId" value="${bbsTopic.id}"/>
+	<table class="septal-table" style='width:400px;' id='editTable'>
+	<tr>
+		<th><label>帖子标题：</label></th>
+		<td>${bbsTopic.title}</td>
+	</tr>
+	<tr>
+		<th><label>是否可回复：</label></th>
+		<td>
+			<#if bbsTopic.isReply.className == "YES">
+				<div class="close yes edit" name="isReply" reverseVal="0"/> 
+			<#elseif bbsTopic.isReply.className == "NO">
+				<div class="open no edit" name="isReply" reverseVal="1"/>
+			</#if>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">是否允许对该贴进行回复,当前状态：<font color='red' id='isReplyFont'>${bbsTopic.isReply.displayName}</font></td>
+	</tr>
+	<tr>
+		<th><label>是否精华：</label></th>
+		<td>
+			<#if bbsTopic.isElite.className == "YES">
+				<div class="close yes edit" name="isElite" reverseVal="0"/> 
+			<#elseif bbsTopic.isElite.className == "NO">
+				<div class="open no edit" name="isElite" reverseVal="1"/>
+			</#if>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">是否在帖子前面显示精华标志,当前状态：<font color='red' id='isEliteFont'>${bbsTopic.isElite.displayName}</font></td>
+	</tr>
+	<tr>
+		<th><label>是否热帖：</label></th>
+		<td>
+			<#if bbsTopic.isHot.className == "YES">
+				<div class="close yes edit" name="isHot" reverseVal="0"/> 
+			<#elseif bbsTopic.isHot.className == "NO">
+				<div class="open no edit" name="isHot" reverseVal="1"/>
+			</#if>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">是否在帖子前面显示热帖标志,当前状态：<font color='red' id='isHotFont'>${bbsTopic.isHot.displayName}</font></td>
+	</tr>
+	<tr>
+		<th><label>是否置顶：</label></th>
+		<td>
+			<#if bbsTopic.isStick.className == "YES">
+				<div class="close yes edit" name="isStick" reverseVal="0"/> 
+			<#elseif bbsTopic.isStick.className == "NO">
+				<div class="open no edit" name="isStick" reverseVal="1"/>
+			</#if>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">是否将帖子置顶显示,当前状态：<font color='red' id='isStickFont'>${bbsTopic.isStick.displayName}</font></td>
+	</tr>
+
+	<tr>
+		<th><label>排序：</label></th>
+		<td id='clickTd'>${bbsTopic.sort}</td>
+	</tr>
+	<tr>
+		<td colspan="2">当按照排序字段进行显示时,排序越高越靠前显示,当前排序：<font color='red' id='sortFont'>${bbsTopic.sort}</font></td>
+	</tr>
+</table>
+<div class="dialog-cancel confirm-btn" style="margin-top:10px;">确认</div>
+</div>

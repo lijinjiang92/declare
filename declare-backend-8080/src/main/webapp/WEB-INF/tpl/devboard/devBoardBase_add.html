@@ -1,0 +1,87 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<script type="text/javascript">
+$(function() {
+	$("#uploadImgs").uploadImg({
+		picType : "ic-board",
+		picInput : "pic",
+		imgRule : "r150c150",
+		picDiv : "uploadImgs",
+		uploadTitle : "up_img"
+	});
+});
+</script>
+<#-- 新增区域 -->
+<form class="form-validate" action="/devBoardBase/adding.html" method="post"
+	suc="新增开发板基础表成功" fail="新增开发板基础表失败">
+	
+	<table class="table-edit">
+		
+		<tr>
+			<th>
+				<label class="required">开发板名：</label>
+			</th>
+			<td>
+				<input type="text" name="name" validator="maxlength[32],required" maxlength="32" />
+			</td>
+			<th>
+				<label>生产厂商：</label>
+			</th>
+			<td>
+				<input type="text" name="manufacturer" validator="maxlength[128]" maxlength="128" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label>图片：</label>
+			</th>
+			<td>
+				<input type="hidden" id="pic" name="pic" validator="maxlength[512]" maxlength="512"/>
+				<div id="uploadImgs" class="uploadPicDiv">
+					<div id="up_img" class="uploadTitle"></div>
+				</div>
+			</td>
+			<th>
+				<label>价格：</label>
+			</th>
+			<td>
+				<input type="text" name="price" validator="decemal,max[99999999999999999999.99999]" maxlength="26" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">排序值：</label>
+			</th>
+			<td>
+				<input type="text" name="sort" validator="num,max[999999999],required" maxlength="9" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label>简介：</label>
+			</th>
+			<td colspan="3">
+				<textarea id="intro" name="intro" cols="60" rows="5" style="width: 660px; height: 190px;"></textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label>备注：</label>
+			</th>
+			<td colspan="3">
+				<textarea id="remark" name="remark" cols="60" rows="5" style="width: 660px; height: 190px;"></textarea>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

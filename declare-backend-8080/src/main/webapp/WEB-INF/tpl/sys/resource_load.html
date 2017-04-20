@@ -1,0 +1,87 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	<tr>
+		<th>
+			<label>资源类型：</label>
+		</th>
+		<td>
+			${resource.resourceType.name}
+		</td>
+		<th>
+			<label>标题：</label>
+		</th>
+		<td>
+			${resource.title}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>状态：</label>
+		</th>
+		<td>
+			<#if obj.status.className == "OPEN">启用
+			<#elseif obj.status.className == "CLOSE">禁用
+			</#if>
+		</td>
+		<th>
+			<label>排序值：</label>
+		</th>
+		<td>
+			${resource.sort}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>发布时间：</label>
+		</th>
+		<td>
+			${resource.publishTime?datetime}
+		</td>
+		<th>
+			<label>下载地址：</label>
+		</th>
+		<td>
+			${resource.url}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>浏览数：</label>
+		</th>
+		<td>
+			${resource.browseNum}
+		</td>
+		<th>
+			<label>下载数：</label>
+		</th>
+		<td>
+			${resource.downloadNum}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>图片：</label>
+		</th>
+		<td>
+			${resource.pic}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>描述：</label>
+		</th>
+		<td>
+			${resource.description}
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

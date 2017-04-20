@@ -1,0 +1,39 @@
+<#include "/WEB-INF/common/core.ftl"/> <#-- 详细信息区域 -->
+<script>
+	$(function() {
+		$("#jianjie").html($("#intro").val());
+		$("#detail").html($("#content").val());
+	});
+</script>
+<table class="table-edit">
+
+	<tr>
+		<th><label>标题：</label></th>
+		<td>${activity.title}</td>
+	</tr>
+	<tr>
+		<th><label>状态：</label></th>
+		<td><#if activity.status.className == "UNVERIFY"> 待审核 <#elseif
+			activity.status.className == "VERIFIED"> 通过 <#elseif activity.status.className
+			== "REJECT"> 驳回 <#elseif activity.status.className == "USER_DELETE"> 用户删除
+			<#elseif activity.status.className == "SYS_DELETE"> 系统删除 </#if></td>
+	</tr>
+	<tr>
+		<th><label>图片：</label></th>
+		<td id='img${activity.id}'><@e.imgUrl url=activity.pic rule="r100c120g"/></td>
+	</tr>
+	<tr>
+		<th><label>简介：</label></th>
+		<td><div id="jianjie"></div><input id="intro" type="hidden" value="${activity.intro}"/></td>
+	</tr>
+	<tr>
+		<th><label>内容：</label></th>
+		<td><div id="detail"></div><input id="content" type="hidden" value="${activity.detail}"/></td>
+	</tr>
+
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

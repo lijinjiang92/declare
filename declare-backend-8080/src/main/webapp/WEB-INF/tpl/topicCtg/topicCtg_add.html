@@ -1,0 +1,34 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<#-- 新增区域 -->
+<form class="form-validate" action="/topicCtg/adding.html" method="post"
+	suc="新增成功" fail="新增失败">
+	
+	<table class="table-edit">
+		
+		<tr>
+			<th>
+				<label class="required">分类名称：</label>
+			</th>
+			<td>
+				<input type="text" name="name" validator="required"  maxlength="30" />
+			</td>
+		</tr>
+		
+		<tr>
+			<th>
+				<label class="required">排序值：</label>
+			</th>
+			<td>
+				<input type="text" name="sort" validator="required,int_no_minus" />
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

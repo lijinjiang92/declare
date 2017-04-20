@@ -1,0 +1,143 @@
+<#include "/WEB-INF/common/core.ftl"/>
+
+<#-- 详细信息区域 -->
+<table class="table-edit">
+	
+	<tr>
+		<th>
+			<label>开发板：</label>
+		</th>
+		<td>
+			${devBoardPro.boardBaseId}
+		</td>
+		<th>
+			<label>标题：</label>
+		</th>
+		<td>
+			${devBoardPro.title}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>图片：</label>
+		</th>
+		<td>
+			<@e.imgUrl url=devBoardPro.pic rule="r60c70" />
+		</td>
+		<th>
+			<label>产品类型：</label>
+		</th>
+		<td>
+			${devBoardPro.proType.displayName}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>状态：</label>
+		</th>
+		<td>
+			${devBoardPro.status.displayName}
+		</td>
+		<th>
+			<label>排序值：</label>
+		</th>
+		<td>
+			${devBoardPro.sort}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>市场价：</label>
+		</th>
+		<td>
+			${devBoardPro.marketPrice}
+		</td>
+		<th>
+			<label>申请价：</label>
+		</th>
+		<td>
+			${devBoardPro.applyPrice}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>可申请总数：</label>
+		</th>
+		<td>
+			${devBoardPro.totalNum}
+		</td>
+		<th>
+			<label>每人最多申请数：</label>
+		</th>
+		<td>
+			${devBoardPro.maxNumPer}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>已申请数：</label>
+		</th>
+		<td>
+			${devBoardPro.applyNum}
+		</td>
+		<th>
+			<label>已申请人次：</label>
+		</th>
+		<td>
+			${devBoardPro.applyManTime}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>开始时间：</label>
+		</th>
+		<td>
+			${devBoardPro.beginTime?datetime}
+		</td>
+		<th>
+			<label>截止时间：</label>
+		</th>
+		<td>
+			${devBoardPro.endTime?datetime}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>简介：</label>
+		</th>
+		<td colspan="3">
+			${devBoardPro.intro}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<label>描述：</label>
+		</th>
+		<td colspan="3">
+			${devBoardPro.description}
+		</td>
+	</tr>
+	
+	<tr>
+		<th>
+			<label>备注：</label>
+		</th>
+		<td colspan="3">
+			${devBoardPro.remark}
+		</td>
+	</tr>
+	
+		
+	<tr>
+		<td colspan="4">
+			<div class="dialog-cancel confirm-btn">确认</div>
+		</td>
+	</tr>
+</table>

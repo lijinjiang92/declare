@@ -1,0 +1,66 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<script type="text/javascript">
+	$(function() {
+		KindEditor.ready(function(K) {
+			window.editor = K.create('#editor_id', {
+				uploadJson: BaseData.imgUrl + '/upload',
+				filePostName: "files",
+				extraFileUploadParams: {
+					"PIC_TYPE": "ic-news",
+					"responseUrl": BaseData.path + "/errors/kindeditor.html"
+				},
+				//批量上传时删除的参数
+				removeParamsInMultiModel: ["responseUrl"],
+				afterBlur : function() {
+					this.sync();
+				}
+			});
+		});
+		$("#uploadImgs").uploadImg({
+			picType : "ic-news",
+			picInput : "pic",
+			imgRule : "r150c150",
+			picDiv : "uploadImgs",
+			uploadTitle : "up_img",
+			initImg: "${news.pic}"
+		});
+	});
+</script>
+
+<#-- 修改区域 -->
+<form class="form-validate" action="/news/updating.do" method="post"
+		suc="更新新闻成功" fail="更新新闻失败">
+		
+	<#-- 影藏属性 -->
+	<input type="hidden" name="id" value="${news.id}"/>
+	<table class="table-edit">
+		<tr>
+			<th><label>标题：</label></th>
+			<td><input type="text" name="title" value="${news.title}" validator="word_zh,required" maxlength="32" style="width:400px"/></td>
+			<th><label>排序：</label></th>
+			<td><input type="text" name="sort" value="${news.sort}" validator="num,max[999999999],required" maxlength="9" /></td>
+		</tr>
+		<tr>
+			<th><label>图片地址：</label></th>
+			<td><input type="hidden" id="pic" name="pic" value="${news.pic}" />
+				<div id="uploadImgs" class="uploadPicDiv">
+					<div id="up_img" class="uploadTitle"></div>
+				</div></td>
+		</tr>
+		<tr>
+			<th><label>概要：</label></th>
+			<td colspan="3"><textarea name="summary" validator="maxlength[200]" maxlength="200">${news.summary}</textarea></td>
+		</tr>
+		<tr>
+			<th><label>内容：</label></th>
+			<td colspan="3"><textarea id="editor_id" name="content" validator="maxlength[2000]" maxlength="2000">${news.content}</textarea></td>
+		</tr>
+		<tr>
+			<td class="btn-td" colspan="4">
+				<button type="button" class="dialog-cancel cancel-btn">取消</button>
+				<button type="button" class="submit submit-btn" submiting="保存...">保存</button>
+			</td>
+		</tr>
+	</table>
+	
+</form>

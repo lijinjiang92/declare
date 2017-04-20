@@ -1,0 +1,133 @@
+<#include "/WEB-INF/common/core.ftl"/>
+<!DOCTYPE HTML>
+<html>
+<head>
+<#include "/WEB-INF/common/meta.html"/>
+<title>案例管理</title>
+<#include "/WEB-INF/common/styles.html"/>
+<@e.link href="http://cdn.diandianme.com/??js/kindeditor/4.1.11/themes/default/default.css" />
+</head>
+<body>
+
+	<#-- 头部区域  -->
+	<#include "/WEB-INF/common/header.html"/>
+	
+	<div id="main">
+		
+		<#-- 左侧菜单区域  -->
+		<#include "/WEB-INF/common/left.html"/>
+		
+		<div id="conent">
+			
+			<#-- 页面标题  -->
+			<h2>案例</h2>
+			
+			<div id="core-div">
+				
+				<#-- 查询区域 -->
+				<div class="control">
+					<form action="/case/list.html" method="post">
+						<ul class="search">
+							
+							<li class="param-li">
+								案例名称：<input type="text" name="title" value="${case.title}" />
+							</li>
+	                        
+							<#-- 查询按钮 -->
+							<li class="search-btns">
+	                        	<button type="submit" class="common-submit btn blue-btn">查询</button>
+	                        	<button type="reset" class="clear-data btn blue-btn">清空</button>
+							</li>
+	                        
+							<#-- 功能按钮区域 -->
+							<li class="handle-btns">
+								<@permited value="case/add">
+	                        		<button type="button" class="btn" dialog="/case/add.html">+ 新增</button>
+	                        	</@permited>
+	                        	<@permited value="case/remove">
+	                        		<button type="button" class="btn" onclick="batchRemove('case/remove.do')">批量删除</button>
+	                        	</@permited>
+	                        	<!-- <@permited value="news/openClose">
+		                        	<button type="button" class="handler open batch btn">启用</button>
+									<button type="button" class="handler close batch btn">禁用</button>
+								</@permited> -->
+							</li>
+						</ul>
+					</form>	
+				</div>
+				
+				<#-- 列表信息区域 -->
+				<div class="data-div">
+					<table class="ui-table">
+						<tr class="th-row">
+							<th width="30" checkbox="true"></th>
+							<th width="40" row-no="true">序号</th>
+							<th width="100">案例名称</th>
+							<th width="100">状态</th>
+							<th width="100" no-tip="true">图片</th>
+							<th width="100">排序值</th>
+							<th width="100">浏览数</th>
+							<th width="100">创建时间</th>
+							<th width="130" fixed="true" no-tip="true">操作</th>
+						</tr>
+						
+						<#list dataPage.data as obj>
+							<#-- trid 方便快速选择某行 -->
+							<tr trid="${obj.id}">
+								<td><input type="checkbox" name="ids" value="${obj.id}" /></td>
+								<td>${obj_index + 1}</td>
+								<td>${obj.title}</td>
+								<td>${obj.status.displayName}</td>
+								<td><@e.imgUrl url=obj.pic rule="td100c40"/></td>
+								<td>${obj.sort}</td>
+								<td><@e.number value=obj.browseNum /></td>
+								<td>${obj.createTime?datetime}</td>
+								<td>
+									<@permited value="case/load">
+										<a class="icon-btn icon-detail" dialog="/case/load.html?id=${obj.id}" title="详情" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="case/update">
+										<a class="icon-btn icon-edit" dialog="/case/update.html?id=${obj.id}" title="修改" href="javascript:void(0);" > </a>
+									</@permited>
+									<@permited value="case/remove">
+										<a class="icon-btn icon-del" href="javascript:remove('/case/remove.do', '${obj.id}');" title="删除" > </a>
+									</@permited>
+								</td>
+							</tr>
+						</#list>
+						
+					</table>
+				</div>
+			</div>
+			<#-- 分页区域 -->
+			<div class="page">
+				<@e.page pageNo=dataPage.pageNo totalPage=dataPage.totalPage
+						url="/case/list.do" showPageNum="5" cssClass="pagnation" />
+			</div>
+			<#-- 底部区域 -->
+			<#include "/WEB-INF/common/footer.html"/>
+		</div>
+		
+	</div>
+<#include "/WEB-INF/common/scripts.html"/>
+<@e.cacheUrl/>
+<@e.script src="http://cdn.diandianme.com/??js/kindeditor/4.1.11/kindeditor-all.js" />
+<script type="text/javascript">
+KindEditor.ready(function(K) {
+	window.editor = K.create('#editor_id', {
+		uploadJson: BaseData.imgUrl + '/upload',
+		filePostName: "files",
+		extraFileUploadParams: {
+			"PIC_TYPE": "ic-case",
+			"responseUrl": BaseData.path + "/errors/kindeditor.html"
+		},
+		//批量上传时删除的参数
+		removeParamsInMultiModel: ["responseUrl"],
+		afterBlur : function() {
+			this.sync();
+		}
+	});
+});
+</script>
+</body>
+</html>

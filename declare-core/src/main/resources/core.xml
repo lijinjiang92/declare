@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd"
+	default-lazy-init="true">
+
+	<context:annotation-config />
+	
+	<context:component-scan base-package="com.dspsemi">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<aop:aspectj-autoproxy />
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!-- 配置常量 -->
+	<bean id="properties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:core.properties</value>
+				<value>classpath:jdbc.properties</value>
+				<value>classpath:url.properties</value>
+				<value>classpath:mail.properties</value>
+				<value>classpath:login.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 计算属性值中的值引用。例：cas.login=${cas.url}/login -->
+	<bean id="exePropertyPlaceholder" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+		depends-on="properties" lazy-init="false">
+		<property name="targetClass" value="com.dspsemi.common.file.PropertiesUtils" />
+		<property name="targetMethod" value="processPlaceholder" />
+		<property name="arguments">
+			<array>
+				<ref bean="properties"/>
+				<value>true</value>
+			</array>
+		</property>
+	</bean>
+	<!-- 处理类的静态变量 ，当properties文件中没有配置值且Class类中已初始化，则值会反刷进properties中 -->
+	<bean id="staticValueProcessor" class="com.dspsemi.common.processor.StaticValueProcessor" 
+		init-method="process" lazy-init="false" depends-on="exePropertyPlaceholder">
+		<property name="properties" ref="properties" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.dspsemi.declare.core.bo</value>
+			</list>
+		</property>
+		<property name="classes">
+			<list>
+				<value>com.dspsemi.declare.core.util.Constants</value>
+				<value>com.dspsemi.common.freemarker.ConfigurationFactory</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="placeholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		depends-on="staticValueProcessor">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="properties" ref="properties" />
+	</bean>
+	<!-- 属性刷到PropertiesPool中 -->
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
+		depends-on="staticValueProcessor">
+		<property name="targetClass" value="com.dspsemi.common.file.PropertiesPool" />
+		<property name="targetMethod" value="addProperties" />
+		<property name="arguments" ref="properties" />
+	</bean>
+	
+	<bean id="enumClassFactory" class="com.dspsemi.common.enums.EnumClassFactory"
+		lazy-init="false">
+		<property name="packagesToScan">
+			<list>
+				<value>com.dspsemi.declare.core.enums</value>
+				<value>com.dspsemi.declare.core.util.mybatis</value>
+				<value>com.dspsemi.common.enums.entity</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="annotatedConfig" class="com.dspsemi.common.jdbc.ConfigPojoBean"
+		lazy-init="false">
+		<property name="packagesToScan" value="com.dspsemi.declare.core.pojo"></property>
+	</bean>
+
+	<!-- 数据源配置 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- 基本属性 url、user、password -->
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="${pool.initialSize}" />
+		<property name="minIdle" value="${pool.minIdle}" />
+		<property name="maxActive" value="${pool.maxActive}" />
+	
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${pool.maxWait}" />
+	
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${pool.timeBetweenEvictionRunsMillis}" />
+	
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${pool.minEvictableIdleTimeMillis}" />
+	
+		<property name="validationQuery" value="${pool.validationQuery}" />
+		<property name="testWhileIdle" value="${pool.testWhileIdle}" />
+		<property name="testOnBorrow" value="${pool.testOnBorrow}" />
+		<property name="testOnReturn" value="${pool.testOnReturn}" />
+	
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="${pool.poolPreparedStatements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="${pool.maxPoolPreparedStatementPerConnectionSize}" />
+	
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="${pool.filters}" />
+		<!-- config.decrypt用于解密数据库密码 -->
+		<property name="connectionProperties" value="config.decrypt=true" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlSessionFactory" class="com.dspsemi.common.mybatis.MyBatisSqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="com.dspsemi.common.mybatis.DefaultSqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+		<property name="basePackage" value="com.dspsemi.declare.core.dao" />
+	</bean>
+
+	<!-- 持有spring上下文的bean -->
+	<bean class="com.dspsemi.common.spring.ApplicationContextFactory"
+		lazy-init="false" />
+
+
+</beans>

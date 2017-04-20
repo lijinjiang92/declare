@@ -1,5 +1,6 @@
 package com.dspsemi.declare.core.util;
 
+import com.alibaba.druid.filter.config.ConfigTools;
 import com.dspsemi.common.BaseConstants;
 import com.dspsemi.common.processor.StaticValue;
 
@@ -79,6 +80,11 @@ public class Constants extends BaseConstants {
 	public static String picGetIp;
 	@StaticValue("${pic_upload}")
 	public static String picUpload;
-	/*********************************************************************/
+	/**
+	 * @throws Exception *******************************************************************/
+	
+	public static void main(String[] args) throws Exception {
+		System.out.println(ConfigTools.encrypt("dsp1748"));
+	}
 	
 }

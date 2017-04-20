@@ -35,6 +35,7 @@
 		</property>
 	</bean>
 	<!-- 计算属性值中的值引用。例：cas.login=${cas.url}/login -->
+	<!--  -->
 	<bean id="exePropertyPlaceholder" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
 		depends-on="properties" lazy-init="false">
 		<property name="targetClass" value="com.dspsemi.common.file.PropertiesUtils" />
@@ -42,10 +43,11 @@
 		<property name="arguments">
 			<array>
 				<ref bean="properties"/>
-				<value>true</value>
+				<value type="boolean">true</value>
 			</array>
 		</property>
 	</bean>
+	
 	<!-- 处理类的静态变量 ，当properties文件中没有配置值且Class类中已初始化，则值会反刷进properties中 -->
 	<bean id="staticValueProcessor" class="com.dspsemi.common.processor.StaticValueProcessor" 
 		init-method="process" lazy-init="false" depends-on="exePropertyPlaceholder">
@@ -62,11 +64,13 @@
 			</list>
 		</property>
 	</bean>
+	
 	<bean id="placeholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		depends-on="staticValueProcessor">
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="properties" ref="properties" />
 	</bean>
+	
 	<!-- 属性刷到PropertiesPool中 -->
 	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"
 		depends-on="staticValueProcessor">

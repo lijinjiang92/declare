@@ -1,0 +1,19 @@
+#login{background:#F0F0F0}
+.box{background:#fff;margin-top:90px;padding:40px;}
+#login .left{float:left;width:50%;margin-top:20px;}
+#login .left p{text-align:center;}
+#login .left a{color:#FF5F00;text-decoration:underline;}
+#login .left .footer{margin-top: 50px;color:#999;font-size:12px;line-height:20px;}
+#login .right .title{padding:0 0 20px 0}
+#login .right .title span{display:inline-block; padding:15px 65px;border-bottom:2px solid #ddd;}
+#login .right .title span.cur{color:#18599D;border-bottom-color: #18599D}
+#login .form{font-size:16px;}
+#login .form ul{display:none}
+#login .form li{height:70px;line-height:70px;font-size:16px;position:relative}
+#login .form input[type="text"],.form input[type="password"],#login .form select{border:1px solid #ddd;padding:10px;border-radius:8px;margin-left:15px;width:72%;font-size:14px;line-height:20px;height:20px;position:relative;}
+#login .form select{height:40px;width:76%}
+#login .form span.err{position:absolute;bottom:-10px;left:95px;color:red;line-height:20px;height:20px;font-size:12px;}
+#login .form .send-code{position:absolute;right:9px;top:16px;display:block;width:120px;height:42px;line-height:40px;background:#17599D;color:#fff;text-align:center;border-radius:0 8px 8px 0;font-size:14px;border:1px solid #17599D}
+#login .form input:disabled{background:#fff;color:#17599D;border-color:#17599D!important;cursor:default}
+#login i{color:red}
+#login button{cursor:pointer; display:block;background:#17599D;color:#fff;width:100%;border-radius:10px;height:46px;margin:20px 0;}

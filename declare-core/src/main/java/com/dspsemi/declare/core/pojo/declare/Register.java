@@ -3,6 +3,7 @@ package com.dspsemi.declare.core.pojo.declare;
 
 import java.util.Date;
 
+import com.dspsemi.common.enums.entity.status.CloseStatus;
 import com.dspsemi.common.enums.entity.status.VerifyStatus;
 import com.dspsemi.common.jpa.Add2Resource;
 import com.dspsemi.common.jpa.Entity;
@@ -42,7 +43,7 @@ public class Register extends AbstractEntity {
 	private java.lang.String registeredIp;
 	private java.lang.String lastLoginIp;
 	private java.util.Date lastLoginTime;
-	private java.lang.String userStatus;
+	private CloseStatus userStatus;
 	
 	public java.lang.String getId() {
 		return id;
@@ -122,11 +123,11 @@ public class Register extends AbstractEntity {
 	public void setLastLoginTime(java.util.Date lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
 	}
-	public java.lang.String getUserStatus() {
-		return userStatus;
-	}
-	public void setUserStatus(java.lang.String userStatus) {
+	public void setUserStatus(CloseStatus userStatus) {
 		this.userStatus = userStatus;
+	}
+	public CloseStatus getUserStatus() {
+		return userStatus;
 	}
 	
 	

@@ -543,7 +543,7 @@ function batchRemove(_url, _info, _sucMsg, _failMsg, _sucFun) {
 		$.alert("warn", "请先选择您要删除的对象！");
 		return;
 	}
-	$.confirm(_info || idsDom.length == 1 ? "确定删除？" : "确定批量删除？", function(){
+	$.confirm(_info || (idsDom.length == 1 ? "确定删除？" : "确定批量删除？"), function(){
 		$.ajax({
             type: "post",
             url: _url,
@@ -559,4 +559,124 @@ function batchRemove(_url, _info, _sucMsg, _failMsg, _sucFun) {
     		}
         });
 	});
+}
+
+/**
+ * 非ajax请求的回调函数
+ * obj = {
+ * 	action: "action", 
+ * 	url: "url", 
+ * 	msg: "msg", 
+ * 	data: {}
+ * }
+ * callbackFun: 用户自定义的回调函数执行callbackFun(data)
+ * 想调用callbackFun自定义函数，必须在form表单中添加
+ * <input type="hidden" name="callbackFun" value="selfCallbackFun" />
+ * 
+ */
+function callback(pathname, data, callbackFun){
+	
+	function getForm(pathname) {
+		var $form = $("form[action*='" + (pathname = (location.origin + pathname).replace(BaseData.path + "/", "")) + "']"),
+			$form = $form.length > 0 ? $form : $("a[href*='" + pathname + "']");
+		return $form;
+	}
+	
+	var $form = getForm(pathname),
+		hasCallbackFun = utils.isString(callbackFun)
+			&& utils.isFunction(window[callbackFun]) ? true : false;
+	if(!data) {
+		if(hasCallbackFun) 
+			window[callbackFun](data);
+		return;
+	}
+	var sucMsg = $form.attr("suc"),
+		failMsg = $form.attr("fail"),
+		code = data.code == BaseData.suc ? "info" : "error",
+		msg = data.msg;
+	//初始化提示信息
+	if(!msg){
+		if(data.code == BaseData.suc){
+			msg = sucMsg;
+		}else if(data.code){
+			msg = failMsg;
+		}
+	}
+	
+	if(!msg && hasCallbackFun) 
+		window[callbackFun](data);
+	if(data.action == "forward"){
+		var url = data.url;
+		if(!data.url){
+			//跳转到相对应的list页面
+			//地址做urlrewrite时需要修改
+			url = document.location.href;
+			url = url.replace(/^(.+?\/)\w+(\.\w+)$/,"$1list$2");
+		}
+		if(msg){
+			$.alert(code, msg, function(){
+				if(hasCallbackFun) 
+					window[callbackFun](data);
+				window.top.location.href = url;
+			});
+		}else
+			window.top.location.href = url;
+	}else if(data.action == "flush_cur"){
+		var url = BaseData.curUri ? utils.addUrlParams(BaseData.curUri, "flush_cached_uri") : window.location.href;
+		if(msg){
+			$.alert(code, msg, function(){
+				if(hasCallbackFun) 
+					window[callbackFun](data);
+				window.location.href = url;
+			});
+		}else{
+			window.location.href = url;
+		}
+	}else if(data.action == "flush_his"){
+		var uri = utils.addUrlParams(BaseData.backUri, "back_cached_uri") || BaseData.path;
+		if(msg){
+			$.alert(code, msg, function(){
+				if(hasCallbackFun) 
+					window[callbackFun](data);
+				window.top.location.href = uri;
+			});
+		}else
+			window.top.location.href = uri;
+	}else if(data.action == "param_error"
+				|| data.action == "none" ){
+		if(msg){
+			$.alert(code, msg, function(){
+				if(hasCallbackFun) 
+					window[callbackFun](data);
+			});
+		}
+	}else if(data.action == "close_dialog_quiet") {
+		var dialog = window.top.$.dialog.list[$.dialog.manageDialogId];
+		if(msg){
+			$.alert(code, msg, function(){
+				if(hasCallbackFun) 
+					window[callbackFun](data);
+				//获取dialog框
+				dialog.close();
+			});
+		}else
+			//获取dialog框
+			dialog.close();
+	}else if(data.action == "close_dialog") {
+		var dialog = window.top.$.dialog.list[$.dialog.manageDialogId],
+			uri = utils.addUrlParams(BaseData.curUri, "flush_cached_uri") || BaseData.path;
+		if(msg){
+			$.alert(code, msg, function(){
+				if(hasCallbackFun) 
+					window[callbackFun](data);
+				//获取dialog框
+				dialog.close();
+				window.top.location.href = uri;
+			});
+		}else {
+			//获取dialog框
+			dialog.close();
+			window.top.location.href = uri;
+		}
+	}
 }

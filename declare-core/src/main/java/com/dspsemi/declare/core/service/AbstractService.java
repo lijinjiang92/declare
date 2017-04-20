@@ -583,4 +583,8 @@ public abstract class AbstractService<T extends Entity> {
 		}
 	}
 	
+	public static String isEmpty(String str){
+		return StringUtils.isBlank(str)?null:str;
+	}
+	
 }

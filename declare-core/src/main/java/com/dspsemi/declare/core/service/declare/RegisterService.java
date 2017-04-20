@@ -52,22 +52,14 @@ public interface RegisterService {
 
 	/**
 	 * 分页模糊查询列表
-	 * 
-	 * @param name
-	 *            活动名称
-	 * @param acType
-	 *            活动类型
-	 * @param startDate
-	 *            活动开始时间
-	 * @param endDate
-	 *            活动结束时间
+	 *
 	 * @param pageNo
 	 *            页码
 	 * @param pageSize
 	 *            每页显示数量
 	 * @return
 	 */
-	DataPage<Register> page(int pageNo, int pageSize);
+	DataPage<Register> page(int pageNo, int pageSize,Register register);
 
 	
 }

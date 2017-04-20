@@ -21,8 +21,8 @@ import com.dspsemi.declare.core.pojo.declare.Register;
 import com.dspsemi.declare.core.service.declare.RegisterService;
 
 /**
- * 公告管理
- * @author yanjy
+ * 用户管理
+ * @author 
  *
  */
 @Controller
@@ -34,8 +34,9 @@ public class RegisterController extends BaseController {
 	/**
 	 * 列表页面
 	 */
-	public DataPage<Register> list(DataPage<Register> dataPage,Model model) throws Exception {
-		return registerService.page(dataPage.getPageNo(), dataPage.getPageSize());
+	public DataPage<Register> list(Register register,DataPage<Register> dataPage,Model model) throws Exception {
+		model.addAttribute("register", register);
+		return registerService.page(dataPage.getPageNo(), dataPage.getPageSize(),register);
 	}   
 	
 	/**

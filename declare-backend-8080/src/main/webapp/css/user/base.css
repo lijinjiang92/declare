@@ -1,0 +1,110 @@
+/* CSS Document by Richie*/
+@charset "utf-8";
+/* 公共样式 */
+body, div, span, h1, h2, h3, h4, h5, h6, p, em, img, strong, b, small, u, i, center, dl, dt, dd, ol, ul, li,  sub, sup, tt, var, del, dfn,  ins, kbd, q, s, samp,  strike, applet, object, iframe, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, blockquote, pre, a, abbr, acronym, address, big, cite, code, mark, audio, video, input, textarea, select { margin:0; padding:0;}
+em, i{font-style:normal;}
+ol, ul{list-style:none;}
+h1, h2, h3, h4, h5, h6{ font-size:14px;font-weight: normal;}
+html { -webkit-text-size-adjust:none;  word-break:break-all; }
+body { font-size:14px; font-family:'微软雅黑','Helvetica Neue',sans-serif,SimHei;  color:#000; background:#fff; line-height:1; }
+.under_white{ position:relative;}
+.under_white:before{ content:''; display:block; width:1200px; height:100%; position:absolute; left:50%; top:0; margin-left:-600px; background:#fff; z-index:-1;}
+/*a 链接*/
+a{
+	color: inherit;;
+	text-decoration:none;
+	outline:none;
+	-webkit-transition:all 0.2s linear;
+    -moz-transition:all 0.2s linear;
+    -o-transition:all 0.2s linear;
+    transition:all 0.2s linear;
+    opacity:0.9;
+}
+a:hover{text-decoration:none; color:#185A9D;opacity:1;}
+
+/*图片居中*/
+.jzimg { display:table-cell; *display:block; overflow:hidden; font:0px/0px 'Arial'; text-align:center; vertical-align:middle;}
+fieldset, img { border:0; vertical-align:middle}
+
+.jzimg img,.jzimg i{vertical-align:middle; max-width:100%; max-height:100%;}
+.jzimg i{height:100%; display:inline-block;}
+
+img{ max-width:100%; max-height:100%;}
+/*浮动*/
+.fl {float:left; display:inline}
+.fr {float:right; display:inline}
+.clear { clear:both}
+.clearfix { *zoom:1;}
+.clearfix:after{clear:both; display:block; height:0; visibility:hidden; line-height:0; content:'\20';}
+.txl{ text-align:left;}
+.txr{ text-align:right;}
+.txc{ text-align:center;}
+.txt-2em{text-indent:2em; }
+
+/*手形*/
+.hand{cursor: pointer;}
+
+/* HTML5 重置为较旧版本的浏览器 */
+article, aside, details, figcaption, figure, footer, header, menu, nav, section { display:block;}
+blockquote, q{quotes:none;}
+blockquote:before, blockquote:after, q:before, q:after { content:''; content:none; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* 按钮样式 */
+input, button, textarea, select { font-size:100%; outline:none; resize:none; border:none;font-family:"helvetica neue",helvetica,"hiragino sans gb",arial,"\5FAE\8F6F\96C5\9ED1","\5B8B\4F53",sans-serif; vertical-align:middle;}
+input[type="button"]{cursor:pointer; border:0}
+input[type="submit"]{cursor:pointer; border:0}
+input[type="reset"]{cursor:pointer; border:0}
+
+.button{ border-radius:4px; background:#fff; border:1px solid #c8c7cc; color:#666;}
+.button.none{ border:none;}
+.button.del{background: #D2322D;color: #fff;}
+.button.success{background: #67AB49;color: #fff;}
+.button.default{}
+.button.white,.button.gray{color: #000;font-weight: bold;}
+.button.gray{background: #999;}
+.button.submit{padding:5px 15px;margin:0 5px; height: 36px;line-height: 20px;}
+.button:hover{}
+a.button{ display:inline-block;}
+a.button:hover{text-decoration:none;}
+
+
+/*删除火狐下按钮默认样式*/
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner{ border:none; padding:0; }
+
+
+/*字体大小、缩进*/
+.f12 { font-size:12px;}
+.f13 { font-size:13px;}
+.f14 { font-size:14px;}
+.f16 { font-size:16px;}
+.f18{ font-size:18px;}
+.f20{ font-size:20px;}
+.f22{ font-size:22px;}
+.t2{text-indent:2em;}
+.fw-b{font-weight: bold;}
+.fw-n{font-weight: normal;}
+.text-warning{color:red;font-size:16px;}
+.txt-1,.txt-2{padding: 6px 35px;background: #E67030;color: #fff;}
+.txt-2{background: #2ABFA9;}
+/*通用标签*/
+.vam{ vertical-align:middle;}
+.no_warp{white-space:nowrap; text-overflow:ellipsis; overflow:hidden;}
+.page_container{ max-width:1200px; margin-left: auto; margin-right: auto;}
+.hidden{ display: none !important;}
+.no_pointer{pointer-events: none;}
+.two_line{overflow : hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;}
+/*tab效果卡样式*/
+.tab_child{ display:none;}
+.tab_body .on{ display:block;}
+.m25{padding:25px;}
+/*-----公共部分页面样式-------*/
+html{height:100%;}
+body{height:100%;}
+.BgF4{background:#F4F4F4;}
+#page{ min-height:100%; margin-bottom:-108px; position:relative; z-index:1;}/*footer:height = 68*/
+#page:after{ content:''; display:block; clear:both; height:108px; width:100%;}
+#page article{ *padding-bottom:108px;}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 ,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta name="keywords" content="IC服务平台">
+    <meta name="description" content="IC服务平台">
+    <title>项目申报应用系统-用户注册</title>
+    <link rel="stylesheet" href="/css/user/base.css">
+    <link rel="stylesheet" href="/css/user/style.css">
+    <link rel="stylesheet" href="/css/user/login.css">
+    <!--[if lte IE 9]> 
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+        <script src="js/css3-mediaqueries.js"></script>
+    <![endif]-->
+</head>
+
+<body id="login">
+    <div class="head fix">
+        <div class="page_container">
+            <div class="logo fl jzimg">
+                <a href="#">
+<!--                 <img src="images/index/logo.png" alt=""> -->
+                </a>
+            </div>
+            <div class="login fr"><a href="/user/login.html">登陆</a> | <a href="/user/reg.html">注册</a></div>
+            <div class="nav fr">
+                
+                <span style="line-height: 70px;height:70px;">您好，欢迎您来到项目申报应用系统！</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="page_container">
+        <div class="box">
+            <div class="left">
+                <img src="/imgs/user/reg.jpg" alt="">
+                <p>已有账号？<a href="/user/login.html">现在登录</a></p>
+                <div class="footer">
+<!--                     <p>华夏芯官网 | HSA官网 | 无线电论坛 | 服务协议</p> -->
+<!--                     <p>Copyright© 2016 | 无锡德思普科技有限公司. All Rights Reserved. 苏ICP备11071881号|v1.0.0</p> -->
+                </div>
+                
+            </div>
+            <div class="right fr">
+                <div class="title"><span class="cur">账号注册</span><span style="width: 96px;height: 24px;">&nbsp;</span>
+                </div>
+                <form action="javascript:userReg();" method="post">
+                <div class="form reg">                
+                    <ul style="display:block;">
+                        <li><i>*</i> 用&nbsp;&nbsp;户&nbsp;&nbsp;名 <input id="registeName" type="text" placeholder="请输入用户名" /></li>
+                        <li><i>*</i> 手机号码 <input type="text" id="mobile" placeholder="请输入便于联系的手机号码" /></li>
+<!--                         <li><i>*</i> 验&nbsp;&nbsp;证&nbsp;&nbsp;码<input type="text" placeholder="请输入验证码" /><input type="button" class="send-code" value="发送验证码"></li> -->
+                        <li><i>*</i> 密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码 <input id="password" type="password" placeholder="请输入不少于6个字符，仅限大小写和数字" /></li>
+                        <li><i>*</i> 确认密码 <input id="repassword" type="password" placeholder="请您再次输入密码" /></li>
+                    </ul>
+
+                </div>
+                <button>注册</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="gotop hand"></div>
+    <script type="text/javascript" src="/js/jquery/jquery-1.12.0.min.js"></script>
+    
+	<script type="text/javascript">
+	$(function(){
+		$('#login input').each(function(i){
+			$(this).keyup(function(){
+				$(this).css('border-color','#ddd')
+				$(this).nextAll('span').remove()
+				var errtext=''
+				switch (i){
+					case 0:
+						errtext = '用户名不能为空'
+					break;
+					case 1:
+						errtext = '手机号不能为空'						
+					break;
+					case 2:
+						errtext = '密码不能为空'
+					break;
+					case 3:
+						errtext = '确认密码不能为空'
+					break;
+				}
+
+				if( $(this).val()==''){
+					$(this).css('border-color','red')
+					$(this).parent().append('<span class="err">' + errtext + '</span>')
+				}
+			})
+		})
+	});
+	
+	function msg(id,msg){
+		$("#"+id).css('border-color','red')
+		$("#"+id).parent().find("span").remove();
+		$("#"+id).parent().append('<span class="err">'+msg+'</span>');
+	}
+	
+	function userReg(){
+		var flag = true;
+		var registeName = $("#registeName").val();
+		if(mobile==''){
+			msg("registeName",'用户名不能为空');
+			flag = false;
+		}else if(registeName.length<2||registeName.length>20){
+			msg("registeName",'用户长度在2-20个字符之间');
+			flag = false;
+		}else{
+			var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
+			if(pattern.test(registeName)){
+				msg("registeName",'用户不能包含特殊字符');
+				flag = false;
+			}
+			
+		}
+			
+			
+		
+		var mobile = $("#mobile").val();
+		if(mobile==''){
+			msg("mobile",'手机号码不能为空');
+			flag = false;
+		}else if(!(/^1[34578]\d{9}$/.test(mobile))){
+			msg("mobile",'手机号码错误，请重新输入');
+			flag = false;
+		}
+		var password = $("#password").val();
+		if(password==""){
+			$("#password").css('border-color','red')
+			$("#password").parent().find("span").remove();
+			$("#password").parent().append('<span class="err">密码不能为空</span>');
+			flag = false;
+		}else if(password.length<6||password.length>20){
+			$("#password").css('border-color','red')
+			$("#password").parent().find("span").remove();
+			$("#password").parent().append('<span class="err">密码长度在6-20个字符之间</span>');
+			flag = false;
+		}else if(!(/^[0-9a-zA-Z]+$/.test(password))){
+			$("#password").css('border-color','red')
+			$("#password").parent().find("span").remove();
+			$("#password").parent().append('<span class="err">密码只能是字母和数字</span>');
+			flag = false;
+		}
+		
+		var repassword = $("#repassword").val();
+		
+		if(repassword==""){
+			$("#repassword").css('border-color','red')
+			$("#repassword").parent().find("span").remove();
+			$("#repassword").parent().append('<span class="err">确认密码不能为空</span>');
+			flag = false;
+		}else if(repassword!=password){
+			$("#repassword").css('border-color','red')
+			$("#repassword").parent().find("span").remove();
+			$("#repassword").parent().append('<span class="err">两次密码不一致</span>');
+			flag = false;
+		}
+		
+		
+		
+		var obj = {
+				registeName:registeName,
+				mobile:mobile,
+				registePassword:password
+		};
+		
+		if(flag){
+			$.ajax({
+				url : '/user/adding.do',
+				type : 'post',
+				data : obj,
+				success : function(data) {
+					if(data.code==0){
+						location.href = "/user/login.html";
+					}else{
+						alert("系统繁忙，请稍后再试！");
+					}
+				}
+			}); 
+		}
+	}
+	
+	
+	
+	
+	</script>
+</body>
+
+</html>

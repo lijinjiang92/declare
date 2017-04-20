@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.druid.filter.config.ConfigTools;
 import com.dspsemi.common.error.ErrorContext;
 import com.dspsemi.common.jdbc.SqlGrammar;
 import com.dspsemi.common.lang.StringUtils;
@@ -65,8 +66,18 @@ public class RegisterServiceImpl extends AbstractService<Register> implements
 	
 
 	@Override
-	public DataPage<Register> page(int pageNo,int pageSize) {
-		//TODO
-		return null;
+	public DataPage<Register> page(int pageNo,int pageSize,Register register) {
+		
+		return super.page(sql().like(R.Register.registeName, StringUtils.isBlank(register.getRegisteName())?null:register.getCreditCode())
+				.eq(R.Register.creditCode, StringUtils.isBlank(register.getCreditCode())?null:register.getCreditCode())
+//				.eq(R.Register.mobile, StringUtils.isBlank(register.getMobile())?null:register.getMobile())
+				.eq(R.Register.mobile, isEmpty(register.getMobile()))
+				.desc(R.Register.lastLoginTime)
+				.limit(pageNo, pageSize));
+	}
+	
+	public static void main(String[] args) throws Exception {
+		System.out.println(ConfigTools.encrypt("123"));
+		
 	}
 }

@@ -3,7 +3,7 @@
 <html>
 <head>
 <#include "/WEB-INF/common/meta.html"/>
-<title>公告</title>
+<title>用户</title>
 <#include "/WEB-INF/common/styles.html"/>
 </head>
 <body>
@@ -16,7 +16,7 @@
 		
 		<div id="conent">
 			
-			<h2>公告</h2>
+			<h2>用户</h2>
 			
 			<div id="core-div">
 				
@@ -24,7 +24,13 @@
 					<form action="/register/list.html" method="post">
 						<ul class="search">
 							<li class="param-li">
-								标题：<input type="text" name="titleQuery" value="" />
+								用户名：<input type="text" name="registeName" value="${register.registeName}" />
+							</li>
+							<li class="param-li">
+								统一社会信用代码：<input type="text" name="creditCode" value="${register.creditCode}" />
+							</li>
+							<li class="param-li">
+								联系手机：<input type="text" name="mobile" value="${register.mobile}" />
 							</li>
 							
 							<li class="search-btns">
@@ -49,7 +55,18 @@
 						<tr class="th-row">
 							<th width="30" checkbox="true"></th>
 							<th width="40" row-no="true">序号</th>
-							<th width="100">创建时间</th>
+							<th width="100">用户名</th>
+							<th width="100">统一社会信用代码</th>
+							<th width="100">联系电话</th>
+							<th width="100">联系手机</th>
+							<th width="100">电子邮箱</th>
+							<th width="100">QQ</th>
+							<th width="100">所任职务</th>
+							<th width="100">HASH</th>
+							<th width="100">注册 IP</th>
+							<th width="100">最后登录 IP</th>
+							<th width="100">最后登录时间</th>
+							<th width="100">用户审核状态</th>
 							<th width="150" fixed="true" no-tip="true">操作</th>
 						</tr>
 						
@@ -57,7 +74,18 @@
 							<tr trid="${obj.id}">
 								<td><input type="checkbox" name="ids" value="${obj.id}" /></td>
 								<td>${obj_index + 1}</td>
-								<td>${obj.createTime?datetime}</td>
+								<td>${obj.registeName}</td>
+								<td>${obj.creditCode}</td>
+								<td>${obj.telphone}</td>
+								<td>${obj.mobile}</td>
+								<td>${obj.email}</td>
+								<td>${obj.QQ}</td>
+								<td>${obj.resume}</td>
+								<td>${obj.HASH}</td>
+								<td>${obj.registeredIP}</td>
+								<td>${obj.lastLoginIP}</td>
+								<td>${obj.lastLoginTime?datetime}</td>
+								<td>${obj.userStatus.displayName}</td>
 								<td>
 									<@permited value="register/load">
 										<a class="icon-btn icon-detail" dialog="/register/load.html?id=${obj.id}" title="详情" href="javascript:void(0);" > </a>
@@ -69,7 +97,7 @@
 										<a class="icon-btn icon-del" href="javascript:remove('/register/remove.html', '${obj.id}');" title="删除" > </a>
 									</@permited>
 								</td>
-							</tr>s
+							</tr>
 						</#list>
 						
 					</table>

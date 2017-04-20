@@ -54,11 +54,12 @@
             </div>
             <div class="right fl" style="width:40%;min-width:450px;margin-left: 50px">
                 <div class="title"><span class="cur" style="width:70%">用户登录</span></div>
-                <form action="#" method="post">
+                <form action="javascript:userLogin();" method="post">
                 <div class="form" >
                     <ul style="display:block;" data-type="login">
-                        <li><i>*</i> 用户名&nbsp;&nbsp;<input type="text" placeholder="请输入您的用户名" /></li>
-                        <li><i>*</i> 密&nbsp;&nbsp;&nbsp;&nbsp;码 <input type="text" placeholder="请输入密码" /></li>
+                    	<li style="height: 0px;"><span id="msg" class="err"></span></li>
+                        <li><i>*</i> 用户名&nbsp;&nbsp;<input id="registeName" type="text" placeholder="请输入您的用户名" /></li>
+                        <li><i>*</i> 密&nbsp;&nbsp;&nbsp;&nbsp;码 <input id="password" type="password" placeholder="请输入密码" /></li>
                     </ul>
                 </div>
                 <div style="margin:10px 0 10px 95px ">
@@ -73,7 +74,87 @@
     <div class="gotop hand"></div>
     <script type="text/javascript" src="/js/jquery/jquery-1.12.0.min.js"></script>
 	<script type="text/javascript">
+	$(function(){
+		$('#login input').each(function(i){
+			$(this).keyup(function(){
+				$(this).css('border-color','#ddd')
+				$(this).nextAll('span').remove()
+				var errtext=''
+				switch (i){
+					case 0:
+						errtext = '用户名不能为空';
+					break;
+					case 1:
+						errtext = '密码不能为空';			
+					break;
+				}
+				if( $(this).val()==''){
+					$(this).css('border-color','red')
+					$(this).parent().append('<span class="err">' + errtext + '</span>')
+				}
+			})
+		})
+	});
 	
+	function msg(id,msg){
+		$("#"+id).css('border-color','red')
+		$("#"+id).parent().find("span").remove();
+		$("#"+id).parent().append('<span class="err">'+msg+'</span>');
+	}
+	
+	function userLogin(){
+		var flag = true;
+		var registeName = $("#registeName").val();
+		if(registeName==''){
+			msg("registeName",'用户名不能为空');
+			flag = false;
+		}else if(registeName.length<2||registeName.length>20){
+			msg("registeName",'用户长度在2-20个字符之间');
+			flag = false;
+		}else{
+			var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
+			if(pattern.test(registeName)){
+				msg("registeName",'用户不能包含特殊字符');
+				flag = false;
+			}
+		}
+		var password = $("#password").val();
+		if(password==""){
+			$("#password").css('border-color','red')
+			$("#password").parent().find("span").remove();
+			$("#password").parent().append('<span class="err">密码不能为空</span>');
+			flag = false;
+		}else if(password.length<6||password.length>20){
+			$("#password").css('border-color','red')
+			$("#password").parent().find("span").remove();
+			$("#password").parent().append('<span class="err">密码长度在6-20个字符之间</span>');
+			flag = false;
+		}else if(!(/^[0-9a-zA-Z]+$/.test(password))){
+			$("#password").css('border-color','red')
+			$("#password").parent().find("span").remove();
+			$("#password").parent().append('<span class="err">密码只能是字母和数字</span>');
+			flag = false;
+		}
+		var obj = {
+				registeName:registeName,
+				registePassword:password
+		};
+		if(flag){
+			$.ajax({
+				url : '/user/logining.do',
+				type : 'post',
+				data : obj,
+				success : function(data) {
+					if(data.code==0){
+						location.href = "/";
+					}else{
+						$("#msg").html(data.msg);
+					}
+				}
+			}); 
+		}
+		
+	}
 	
 	
 	

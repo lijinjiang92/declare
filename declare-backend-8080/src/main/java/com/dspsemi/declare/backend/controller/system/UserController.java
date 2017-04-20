@@ -7,15 +7,18 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,6 +27,9 @@ import com.dspsemi.common.enums.entity.status.CloseStatus;
 import com.dspsemi.common.error.CodeMsg;
 import com.dspsemi.common.lang.StringUtils;
 import com.dspsemi.common.lang.dto.DataPage;
+import com.dspsemi.common.lang.dto.UserInfo;
+import com.dspsemi.common.security.SecurityUtils;
+import com.dspsemi.common.session.SecurityUser;
 import com.dspsemi.common.validate.Assert;
 import com.dspsemi.common.validate.VerifyCode;
 import com.dspsemi.common.web.BaseController;
@@ -41,16 +47,51 @@ public class UserController extends BaseController {
 	@Resource
 	private RegisterService registerService;
 	
-	
-	public void login(Model model){
-		
+	@RequestMapping("/logout")
+	public String logout(HttpSession session){
+		session.invalidate();
+		return "redirect:/user/login";
 	}
 	
 	/**
 	 * 登录页面
 	 */
-	public void add(Model model) throws Exception {
+	public void login(Model model){
 		
+	}
+	/**
+	 * 用户登录
+	 * @param register
+	 * @param request
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 */
+	@ResponseBody
+	public CodeMsg logining(Register register, HttpServletRequest request,HttpSession session) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		//验证用户密码
+		Register r = registerService.loadByRegisteName(register.getRegisteName());
+		if(r==null){
+			return CodeMsg.FAIL.msg("用户或密码不正确");
+		}
+		String pwd = encoderByMd5(register.getRegistePassword(), r.getHash());
+		if(!pwd.equals(r.getRegistePassword())){
+			return CodeMsg.FAIL.msg("用户或密码不正确");
+		}
+		
+		//设置用户信息、
+		UserInfo user = new UserInfo();
+		user.setUserId(r.getId());
+		user.setUsername(r.getRegisteName());
+		SecurityUser.setUser(session, user);
+		
+		//跟新用户登录信息
+		try {
+			registerService.updateLoginInfo(getIp(request), new Date(), r.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return CodeMsg.SUC.msg("登录成功");
 	}
 	
 	/**
@@ -65,7 +106,7 @@ public class UserController extends BaseController {
 	
 	
 	/**
-	 * 执行新增
+	 * 执行注册
 	 * @return 
 	 */
 	@ResponseBody

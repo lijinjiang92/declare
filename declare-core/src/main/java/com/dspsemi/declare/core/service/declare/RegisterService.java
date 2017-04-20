@@ -1,6 +1,8 @@
 package com.dspsemi.declare.core.service.declare;
 
 
+import java.util.Date;
+
 import com.dspsemi.common.lang.dto.DataPage;
 import com.dspsemi.declare.core.pojo.declare.Register;
 
@@ -25,6 +27,13 @@ public interface RegisterService {
 	 * @return
 	 */
 	int update(Register register);
+	/**
+	 * 更新用户登录信息
+	 * 
+	 * @param activity
+	 * @return
+	 */
+	int updateLoginInfo(String lastLoginIP, Date lastLoginTime, String id);
 
 	/**
 	 * 删除
@@ -49,6 +58,13 @@ public interface RegisterService {
 	 * @return
 	 */
 	Register load(String id);
+	/**
+	 * 根据主键ID获取信息
+	 * 
+	 * @param activityId
+	 * @return
+	 */
+	Register loadByRegisteName(String registeName);
 
 	/**
 	 * 分页模糊查询列表
@@ -60,6 +76,9 @@ public interface RegisterService {
 	 * @return
 	 */
 	DataPage<Register> page(int pageNo, int pageSize,Register register);
+	
+	
+	
 
 	
 }

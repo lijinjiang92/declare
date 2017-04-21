@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.druid.filter.config.ConfigTools;
+import com.dspsemi.common.enums.entity.status.CloseStatus;
 import com.dspsemi.common.error.ErrorContext;
 import com.dspsemi.common.jdbc.SqlGrammar;
 import com.dspsemi.common.lang.StringUtils;
@@ -79,5 +80,15 @@ public class RegisterServiceImpl extends AbstractService<Register> implements
 	public static void main(String[] args) throws Exception {
 		System.out.println(ConfigTools.encrypt("123"));
 		
+	}
+
+	@Override
+	public Register loadByRegisteName(String registeName) {
+		return super.get(sql().eq(R.Register.registeName, registeName).eq(R.Register.userStatus, CloseStatus.OPEN));
+	}
+
+	@Override
+	public int updateLoginInfo(String lastLoginIP, Date lastLoginTime, String id) {
+		return super.update(sql().update(R.Register.lastLoginIp, lastLoginIP).update(R.Register.lastLoginTime, lastLoginTime).eq(R.Register.id, id));
 	}
 }

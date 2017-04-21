@@ -3,8 +3,48 @@
 <html>
 <head>
 <#include "/WEB-INF/common/meta.html"/>
-<title>公告</title>
+<title>企业</title>
 <#include "/WEB-INF/common/styles.html"/>
+
+<style type="text/css">
+.tab {
+    border-left: #E4E4E4 1px solid;
+}
+.tab a {
+    text-decoration: none;
+    border-top: 1px #E4E4E4 solid;
+    border-right: 1px #E4E4E4 solid;
+    border-bottom: 1px solid #E4E4E4;
+    background: #eee;
+    padding: 5px;
+    color: #369;
+    float: left;
+    cursor: pointer;
+}
+.tabspace {
+    border-bottom: 1px solid #E4E4E4;
+    padding-top: 11px;
+}
+.tab .on {
+    border-bottom: 1px solid #fff;
+    background: #fff;
+    color: black;
+    cursor: default;
+    font-weight: bold;
+}
+.tab a {
+    text-decoration: none;
+    border-top: 1px #E4E4E4 solid;
+    border-right: 1px #E4E4E4 solid;
+    border-bottom: 1px solid #E4E4E4;
+    background: #eee;
+    padding: 5px;
+    color: #369;
+    float: left;
+    cursor: pointer;
+}
+</style>
+
 </head>
 <body>
 
@@ -16,10 +56,17 @@
 		
 		<div id="conent">
 			
-			<h2>公告</h2>
+			<h2>企业</h2>
 			
 			<div id="core-div">
-				
+				<div class="tab">
+					<a href="/enterprise/list.html" class="on">&nbsp;企&nbsp;业&nbsp;主&nbsp;要&nbsp;信&nbsp;息&nbsp;</a>
+					<a href="/enterprise/list.html">企业相关信息</a>
+					<a href="/enterprise/list.html">企业销售产品</a>
+					<a href="/enterprise/list.html">企业采购物资</a>
+					<a href="/enterprise/list.html">企业财务报表</a>
+					<div class="tabspace">&nbsp;</div>
+				</div>
 				<div class="control">
 					<form action="/enterprise/list.html" method="post">
 						<ul class="search">
@@ -37,7 +84,7 @@
 		                        	<button type="button" class="btn" dialog="/enterprise/add.html">+ 新增</button>
 								</@permited>
 								<@permited value="enterprise/remove">
-	                        		<button type="button" class="btn" onclick="batchRemove('enterprise/remove.html')">删除</button>
+	                        		<button type="button" class="btn" onclick="batchRemove('/enterprise/remove.html')">删除</button>
 	                        	</@permited>
 							</li>
 						</ul>
@@ -49,7 +96,25 @@
 						<tr class="th-row">
 							<th width="30" checkbox="true"></th>
 							<th width="40" row-no="true">序号</th>
-							<th width="100">创建时间</th>
+							<th width="100">注册号</th>
+							<th width="100">统一社会信用代码</th>
+							<th width="100">企业名称</th>
+							<th width="100">法定代表人(负责人)</th>
+							<th width="100">成立日期</th>
+							<th width="100">企业状态</th>
+							<th width="100">登记机关</th>
+							<th width="100">管辖单位</th>
+							<th width="100">企业类型</th>
+							<th width="100">注册资本</th>
+							<th width="100">核准日期</th>
+							<th width="100">档案号</th>
+							<th width="100">行业</th>
+							<th width="100">经营范围</th>
+							<th width="100">经营截止日期</th>
+							<th width="100">经营地址</th>
+							<th width="100">电话</th>
+							<th width="100">营业执照</th>
+							<th width="100">审核状态</th>
 							<th width="150" fixed="true" no-tip="true">操作</th>
 						</tr>
 						
@@ -57,7 +122,26 @@
 							<tr trid="${obj.id}">
 								<td><input type="checkbox" name="ids" value="${obj.id}" /></td>
 								<td>${obj_index + 1}</td>
-								<td>${obj.createTime?datetime}</td>
+								<td>${obj.registrationNo}</td>
+								<td>${obj.creditCode}</td>
+								<td>${obj.enterpriseName}</td>
+								<td>${obj.legalRepresentative}</td>
+								<td>${obj.establishmentDate?datetime}</td>
+								<td>${obj.enterpriseStatus}</td>
+								<td>${obj.registrationInstitution}</td>
+								<td>${obj.jurisdictionUnit}</td>
+								<td>${obj.enterpriseType}</td>
+								<td>${obj.registeredCapital}</td>
+								<td>${obj.approvalTime?datetime}</td>
+								<td>${obj.fileNo}</td>
+								<td>${obj.corporateIndustry}</td>
+								<td>${obj.businessScope}</td>
+								<td>${obj.termValidity?datetime}</td>
+								<td>${obj.address}</td>
+								<td>${obj.telphone}</td>
+								<td>${obj.businessLicence}</td>
+								<td>${obj.verifiyStatus}</td>
+								<td>${obj.registrationNo}</td>
 								<td>
 									<@permited value="enterprise/load">
 										<a class="icon-btn icon-detail" dialog="/enterprise/load.html?id=${obj.id}" title="详情" href="javascript:void(0);" > </a>

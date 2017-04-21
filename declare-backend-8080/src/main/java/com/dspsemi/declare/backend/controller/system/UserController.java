@@ -29,7 +29,7 @@ import com.dspsemi.common.lang.StringUtils;
 import com.dspsemi.common.lang.dto.DataPage;
 import com.dspsemi.common.lang.dto.UserInfo;
 import com.dspsemi.common.security.SecurityUtils;
-import com.dspsemi.common.session.SecurityUser;
+//import com.dspsemi.common.session.SecurityUser;
 import com.dspsemi.common.validate.Assert;
 import com.dspsemi.common.validate.VerifyCode;
 import com.dspsemi.common.web.BaseController;
@@ -83,7 +83,7 @@ public class UserController extends BaseController {
 		UserInfo user = new UserInfo();
 		user.setUserId(r.getId());
 		user.setUsername(r.getRegisteName());
-		SecurityUser.setUser(session, user);
+//		SecurityUser.setUser(session, user);
 		
 		//跟新用户登录信息
 		try {

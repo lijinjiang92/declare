@@ -1,0 +1,36 @@
+.tab {
+    border-left: #E4E4E4 1px solid;
+}
+.tab a {
+    text-decoration: none;
+    border-top: 1px #E4E4E4 solid;
+    border-right: 1px #E4E4E4 solid;
+    border-bottom: 1px solid #E4E4E4;
+    background: #eee;
+    padding: 5px;
+    color: #369;
+    float: left;
+    cursor: pointer;
+}
+.tabspace {
+    border-bottom: 1px solid #E4E4E4;
+    padding-top: 11px;
+}
+.tab .on {
+    border-bottom: 1px solid #fff;
+    background: #fff;
+    color: black;
+    cursor: default;
+    font-weight: bold;
+}
+.tab a {
+    text-decoration: none;
+    border-top: 1px #E4E4E4 solid;
+    border-right: 1px #E4E4E4 solid;
+    border-bottom: 1px solid #E4E4E4;
+    background: #eee;
+    padding: 5px;
+    color: #369;
+    float: left;
+    cursor: pointer;
+}

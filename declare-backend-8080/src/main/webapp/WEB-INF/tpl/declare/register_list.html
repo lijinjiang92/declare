@@ -5,6 +5,44 @@
 <#include "/WEB-INF/common/meta.html"/>
 <title>用户</title>
 <#include "/WEB-INF/common/styles.html"/>
+<style type="text/css">
+.tab {
+    border-left: #E4E4E4 1px solid;
+}
+.tab a {
+    text-decoration: none;
+    border-top: 1px #E4E4E4 solid;
+    border-right: 1px #E4E4E4 solid;
+    border-bottom: 1px solid #E4E4E4;
+    background: #eee;
+    padding: 5px;
+    color: #369;
+    float: left;
+    cursor: pointer;
+}
+.tabspace {
+    border-bottom: 1px solid #E4E4E4;
+    padding-top: 11px;
+}
+.tab .on {
+    border-bottom: 1px solid #fff;
+    background: #fff;
+    color: black;
+    cursor: default;
+    font-weight: bold;
+}
+.tab a {
+    text-decoration: none;
+    border-top: 1px #E4E4E4 solid;
+    border-right: 1px #E4E4E4 solid;
+    border-bottom: 1px solid #E4E4E4;
+    background: #eee;
+    padding: 5px;
+    color: #369;
+    float: left;
+    cursor: pointer;
+}
+</style>
 </head>
 <body>
 
@@ -19,6 +57,13 @@
 			<h2>用户</h2>
 			
 			<div id="core-div">
+				<div class="tab">
+					<a href="orderReport/report1.do">&nbsp;支&nbsp;付&nbsp;类&nbsp;型&nbsp;</a>
+					<a href="orderReport/report2.do">&nbsp;订&nbsp;单&nbsp;状&nbsp;态&nbsp;</a> 
+					<a class="on">&nbsp;订&nbsp;单&nbsp;类&nbsp;型&nbsp;</a> 
+					<div class="tabspace">&nbsp;</div>
+				</div>
+				
 				
 				<div class="control">
 					<form action="/register/list.html" method="post">
@@ -39,11 +84,11 @@
 							</li>
 	                        
 							<li class="handle-btns">
-								<@permited value="register/add">
-		                        	<button type="button" class="btn" dialog="/register/add.html">+ 新增</button>
-								</@permited>
+<!-- 								<@permited value="register/add"> -->
+<!-- 		                        	<button type="button" class="btn" dialog="/register/add.html">+ 新增</button> -->
+<!-- 								</@permited> -->
 								<@permited value="register/remove">
-	                        		<button type="button" class="btn" onclick="batchRemove('register/remove.html')">删除</button>
+	                        		<button type="button" class="btn" onclick="batchRemove('/register/remove.html')">删除</button>
 	                        	</@permited>
 							</li>
 						</ul>
@@ -66,7 +111,7 @@
 							<th width="100">注册 IP</th>
 							<th width="100">最后登录 IP</th>
 							<th width="100">最后登录时间</th>
-							<th width="100">用户审核状态</th>
+							<th width="100" fixed="true" no-tip="true">用户状态</th>
 							<th width="150" fixed="true" no-tip="true">操作</th>
 						</tr>
 						
@@ -79,20 +124,26 @@
 								<td>${obj.telphone}</td>
 								<td>${obj.mobile}</td>
 								<td>${obj.email}</td>
-								<td>${obj.QQ}</td>
+								<td>${obj.qq}</td>
 								<td>${obj.resume}</td>
-								<td>${obj.HASH}</td>
-								<td>${obj.registeredIP}</td>
-								<td>${obj.lastLoginIP}</td>
+								<td>${obj.hash}</td>
+								<td>${obj.registeredIp}</td>
+								<td>${obj.lastLoginIp}</td>
 								<td>${obj.lastLoginTime?datetime}</td>
-								<td>${obj.userStatus.displayName}</td>
+								<td>
+									<#if obj.userStatus.className == "OPEN">
+										<div class="handler close yes status" /> 
+									<#elseif obj.userStatus.className == "CLOSE">
+										<div class="handler open no status" />
+									</#if>
+								</td>
 								<td>
 									<@permited value="register/load">
 										<a class="icon-btn icon-detail" dialog="/register/load.html?id=${obj.id}" title="详情" href="javascript:void(0);" > </a>
 									</@permited>
-									<@permited value="register/update">
-										<a class="icon-btn icon-edit" dialog="/register/update.html?id=${obj.id}" title="修改" href="javascript:void(0);" > </a>
-									</@permited>
+<!-- 									<@permited value="register/update"> -->
+<!-- 										<a class="icon-btn icon-edit" dialog="/register/update.html?id=${obj.id}" title="修改" href="javascript:void(0);" > </a> -->
+<!-- 									</@permited> -->
 									<@permited value="register/remove">
 										<a class="icon-btn icon-del" href="javascript:remove('/register/remove.html', '${obj.id}');" title="删除" > </a>
 									</@permited>

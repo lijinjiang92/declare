@@ -3,7 +3,6 @@ package com.dspsemi.declare.core.service.declare;
 
 import java.util.Date;
 
-import com.dspsemi.common.enums.entity.status.CloseStatus;
 import com.dspsemi.common.lang.dto.DataPage;
 import com.dspsemi.declare.core.pojo.declare.Register;
 
@@ -77,17 +76,6 @@ public interface RegisterService {
 	 * @return
 	 */
 	DataPage<Register> page(int pageNo, int pageSize,Register register);
-	
-	/**
-	 * 修改用户密码 0 失败 1成功
-	 * @param id
-	 * @param oldPwd
-	 * @param newPwd
-	 * @return
-	 */
-	int updatePwd(String id,String oldPwd,String newPwd);
-	
-	public int openClose(String[] ids, CloseStatus status);
 	
 	
 	

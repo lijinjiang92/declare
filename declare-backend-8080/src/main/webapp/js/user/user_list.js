@@ -4,7 +4,7 @@ $(function(){
 	$(".handler").changeHandler({
 		//操作成功后修改的目标对象
 		targetClass: "status",
-		url: "/register/openClose.json"
+		url: "/user/openClose.json"
 	});
 	
 	window.cfgRoles = function(userId) {

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-04-21 17:17:59
+Date: 2017-04-20 17:50:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,26 +48,26 @@ CREATE TABLE `dd_year` (
 -- ----------------------------
 DROP TABLE IF EXISTS `enterprise`;
 CREATE TABLE `enterprise` (
-  `registrationNo` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `creditCode` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `enterpriseName` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `legalRepresentative` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `establishmentDate` date NOT NULL,
-  `enterpriseStatus` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `registrationInstitution` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `jurisdictionUnit` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `enterpriseType` int(5) NOT NULL,
-  `registeredCapital` int(5) NOT NULL,
-  `approvalTime` date DEFAULT NULL,
-  `fileNo` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `corporateIndustry` int(5) DEFAULT NULL,
-  `businessScope` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `termValidity` date DEFAULT NULL,
+  `registration_No` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `credit_Code` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `enterprise_Name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `legal_Representative` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `establishment_Date` date NOT NULL,
+  `enterprise_Status` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `registration_Institution` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `jurisdiction_Unit` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `enterprise_Type` int(5) NOT NULL,
+  `registered_Capital` int(5) NOT NULL,
+  `approval_Time` date DEFAULT NULL,
+  `file_No` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `corporate_Industry` int(5) DEFAULT NULL,
+  `business_Scope` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `term_Validity` date DEFAULT NULL,
   `address` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `telphone` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `businessLicence` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `verifiyStatus` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`registrationNo`)
+  `business_Licence` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `verifiy_Status` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`registration_No`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -79,36 +79,36 @@ CREATE TABLE `enterprise` (
 -- ----------------------------
 DROP TABLE IF EXISTS `enterprise_info`;
 CREATE TABLE `enterprise_info` (
-  `fileNo` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `creditCode` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `enterpriseNet` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `foreignCapital` double(5,2) NOT NULL,
+  `file_No` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `credit_Code` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `enterprise_Net` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `foreign_Capital` double(5,2) NOT NULL,
   `workers` int(5) NOT NULL,
-  `levelCredit` int(5) DEFAULT NULL,
-  `occupy` double(5,2) DEFAULT NULL,
-  `infoDeptPeople` int(5) DEFAULT NULL,
-  `computers` int(5) NOT NULL,
-  `netComputers` int(5) NOT NULL,
-  `broadBan` int(11) DEFAULT NULL,
-  `superintendent` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `superDept` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `superTel` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `superMobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `superEmail` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `finance` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `financeDept` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `financeTel` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `financeMobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `financeEmail` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `human` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `humanDept` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `humanTel` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `humanMobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `humanEmail` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `applySubject` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `workSystem` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `awards` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`fileNo`)
+  `level_Credit` int(5) DEFAULT NULL,
+  `Occupy` double(5,2) DEFAULT NULL,
+  `Info_Dept_People` int(5) DEFAULT NULL,
+  `Computers` int(5) NOT NULL,
+  `NetComputers` int(5) NOT NULL,
+  `Broad_Ban` int(11) DEFAULT NULL,
+  `Superintendent` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Super_Dept` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Super_Tel` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Super_Mobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Super_Email` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Finance` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Finance_Dept` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Finance_Tel` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Finance_Mobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Finance_Email` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Human` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Human_Dept` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Human_Tel` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Human_Mobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Human_Email` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Apply_Subject` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Work_System` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Awards` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`file_No`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -120,15 +120,15 @@ CREATE TABLE `enterprise_info` (
 -- ----------------------------
 DROP TABLE IF EXISTS `enterprise_report`;
 CREATE TABLE `enterprise_report` (
-  `fileNo` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `creditCode` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `financeYear` int(5) DEFAULT NULL,
+  `file_No` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `credit_Code` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `FINANCE_YEAR` int(5) DEFAULT NULL,
   `sales` double(5,2) DEFAULT NULL,
   `profits` double(5,2) DEFAULT NULL,
   `taxs` double(5,2) DEFAULT NULL,
-  `prodInputsHard` double(5,2) DEFAULT NULL,
-  `prodInputsSoft` double(5,2) DEFAULT NULL,
-  PRIMARY KEY (`fileNo`)
+  `prod_Inputs_Hard` double(5,2) DEFAULT NULL,
+  `prod_Inputs_Soft` double(5,2) DEFAULT NULL,
+  PRIMARY KEY (`file_No`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -140,14 +140,14 @@ CREATE TABLE `enterprise_report` (
 -- ----------------------------
 DROP TABLE IF EXISTS `enterprise_sales`;
 CREATE TABLE `enterprise_sales` (
-  `fileNo` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `crediCode` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `infoType` char(1) COLLATE utf8_unicode_ci NOT NULL,
-  `productsName` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `prodSales` double(5,2) DEFAULT NULL,
-  `customerArea` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file_No` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `credit_Code` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `info_Type` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `products_Name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `prod_Sales` double(5,2) DEFAULT NULL,
+  `customer_Area` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `customers` int(5) DEFAULT NULL,
-  PRIMARY KEY (`fileNo`)
+  PRIMARY KEY (`file_No`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -155,20 +155,20 @@ CREATE TABLE `enterprise_sales` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for interfaces
+-- Table structure for interface
 -- ----------------------------
-DROP TABLE IF EXISTS `interfaces`;
-CREATE TABLE `interfaces` (
+DROP TABLE IF EXISTS `interface`;
+CREATE TABLE `interface` (
   `id` int(5) NOT NULL,
-  `apiAddress` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `apiKeyword` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `apiDate` date DEFAULT NULL,
-  `apiStatus` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `API_Address` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `API_Keyword` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `API_date` date DEFAULT NULL,
+  `API_status` char(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
--- Records of interfaces
+-- Records of interface
 -- ----------------------------
 
 -- ----------------------------
@@ -177,7 +177,7 @@ CREATE TABLE `interfaces` (
 DROP TABLE IF EXISTS `mail`;
 CREATE TABLE `mail` (
   `id` int(5) NOT NULL,
-  `smtp` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `SMTP` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `username` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   `port` int(5) DEFAULT NULL,
@@ -193,16 +193,16 @@ CREATE TABLE `mail` (
 -- ----------------------------
 DROP TABLE IF EXISTS `project_wz`;
 CREATE TABLE `project_wz` (
-  `subjectNo` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `wzType` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `wzContent` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `wzSum` int(5) DEFAULT NULL,
-  `wzPayDate` date DEFAULT NULL,
-  `wzMoney` double(5,2) DEFAULT NULL,
-  `wzFinanceNo` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `wzBillNo` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `wzBill` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`subjectNo`)
+  `Subject_No` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `Wz_Type` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `Wz_Content` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Wz_Sum` int(5) DEFAULT NULL,
+  `Wz_PayDate` date DEFAULT NULL,
+  `Wz_Money` double(5,2) DEFAULT NULL,
+  `Wz_Finance_No` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Wz_Bill_No` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Wz_Bill` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`Subject_No`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
@@ -221,13 +221,13 @@ CREATE TABLE `register` (
   `telphone` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `mobile` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `qq` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `QQ` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `resume` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `hash` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
-  `registeredIp` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `lastLoginIp` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `HASH` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `registeredIP` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `lastLoginIP` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lastLoginTime` datetime DEFAULT NULL,
-  `userStatus` int(1) DEFAULT NULL,
+  `userStatus` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -242,8 +242,8 @@ INSERT INTO `register` VALUES ('a15b7', '张三', '7VPs-9HxmLlcUGsz32DN3A', null
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` int(5) NOT NULL,
-  `roleName` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `roleGrant` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `role_Name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `role_grant` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -257,11 +257,8 @@ CREATE TABLE `role` (
 DROP TABLE IF EXISTS `role_grant`;
 CREATE TABLE `role_grant` (
   `id` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `grantName` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `grantFlag` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `grantPic` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `grantType` int(1) DEFAULT NULL,
-  `grantUrl` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `grant_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `grant_flag` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -274,22 +271,22 @@ CREATE TABLE `role_grant` (
 -- ----------------------------
 DROP TABLE IF EXISTS `subject`;
 CREATE TABLE `subject` (
-  `subjectNo` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `creditCode` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `subjectName` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `registeredService` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `serviceProvider` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `declarationOpinion` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `declarationTime` date DEFAULT NULL,
-  `departmentOpinion` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `departmentDate` date DEFAULT NULL,
-  `subjectStartTime` date DEFAULT NULL,
-  `subjectEndTime` date DEFAULT NULL,
-  `bookPerson` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `examinePerson` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subjectUpload` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subjectMoney` double DEFAULT NULL,
-  PRIMARY KEY (`subjectNo`)
+  `Subject_No` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `Credit_Code` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `Subject_Name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `Registered_Service` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Service_Provider` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Declaration_Opinion` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Declaration_Time` date DEFAULT NULL,
+  `Department_Opinion` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Department_Date` date DEFAULT NULL,
+  `Subject_Start_Time` date DEFAULT NULL,
+  `Subject_End_Time` date DEFAULT NULL,
+  `Book_Person` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Examine_Person` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Subject_Upload` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Subject_Money` double DEFAULT NULL,
+  PRIMARY KEY (`Subject_No`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
